@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Это Тема | AI-разработка</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="noise"></div>
+    <div class="grid-bg"></div>
+    
+    <header class="header">
+        <div class="logo">
+            <span class="logo-icon">◈</span>
+            <span class="logo-text">Это Тема</span>
+        </div>
+        <nav class="nav">
+            <a href="#about">О нас</a>
+            <a href="#services">Услуги</a>
+            <a href="#contact">Контакты</a>
+        </nav>
+    </header>
+
+    <main class="hero">
+        <div class="hero-content">
+            <div class="badge">AI-разработка нового поколения</div>
+            <h1 class="title">
+                <span class="title-line">Будущее</span>
+                <span class="title-line accent">создаётся</span>
+                <span class="title-line">здесь</span>
+            </h1>
+            <p class="subtitle">
+                Мы превращаем сложные идеи в элегантные ИИ-решения. 
+                Каждый проект — это новая глава в истории технологий.
+            </p>
+            <div class="cta-group">
+                <a href="#contact" class="btn btn-primary">Обсудить проект</a>
+                <a href="#about" class="btn btn-secondary">Узнать больше</a>
+            </div>
+        </div>
+        
+        <div class="hero-visual">
+            <div class="orb orb-1"></div>
+            <div class="orb orb-2"></div>
+            <div class="orb orb-3"></div>
+            <div class="code-block">
+                <div class="code-line"><span class="keyword">def</span> <span class="func">create_future</span>():</div>
+                <div class="code-line indent">    <span class="comment"># Будущее, которое мы создаём</span></div>
+                <div class="code-line indent">    <span class="keyword">return</span> <span class="string">"Это Тема"</span></div>
+                <div class="code-line indent">    
+    <span class="func">generate_ai</span>(<span class="param">ideas</span>=<span class="string">"бесконечность"</span>)</div>
+                <div class="cursor">|</div>
+            </div>
+        </div>
+    </main>
+
+    <section class="features" id="services">
+        <div class="feature">
+            <div class="feature-icon">⚡</div>
+            <h3>ML-решения</h3>
+            <p>Машинное обучение любой сложности для вашего бизнеса</p>
+        </div>
+        <div class="feature">
+            <div class="feature-icon">🔮</div>
+            <h3>Нейросети</h3>
+            <p>Кастомные нейронные сети под любые задачи</p>
+        </div>
+        <div class="feature">
+            <div class="feature-icon">🎯</div>
+            <h3>AI-консалтинг</h3>
+            <p>Экспертная помощь во внедрении ИИ-технологий</p>
+        </div>
+    </section>
+
+    <section class="contact" id="contact">
+        <div class="contact-content">
+            <h2>Готовы начать?</h2>
+            <p>Расскажите нам о своей идее — и мы поможем воплотить её в жизнь</p>
+            <a href="mailto:hello@etotema.ru" class="email-link">hello@etotema.ru</a>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-logo">
+                <span class="logo-icon">◈</span>
+                <span>Это Тема</span>
+            </div>
+            <p class="copyright">© 2026 Это Тема. Все права защищены.</p>
+            <p class="tagline">Искусственный интеллект. Человечность.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Анимация появления при скролле
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.feature, .contact-content').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Плавающая анимация для orbs
+        document.addEventListener('mousemove', (e) => {
+            const orbs = document.querySelectorAll('.orb');
+            const x = e.clientX / window.innerWidth;
+            const y = e.clientY / window.innerHeight;
+
+            orbs.forEach((orb, i) => {
+                const speed = (i + 1) * 20;
+                orb.style.transform = `translate(${x * speed}px, ${y * speed}px)`;
+            });
+        });
+    </script>
+</body>
+</html>
