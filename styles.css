@@ -406,12 +406,99 @@ body {
 }
 
 /* Responsive */
-@media (max-width: 1024px) {
-    .hero {
-        grid-template-columns: 1fr;
-        text-align: center;
-        padding-top: 6rem;
+@media (max-width: 768px) {
+    .header {
+        padding: 1rem 2rem;
     }
+
+    .nav {
+        display: none;
+    }
+
+    .hero, .features, .contact {
+        padding: 4rem 2rem;
+    }
+
+    .title {
+        font-size: 2.25rem;
+    }
+
+    .cta-group {
+        flex-direction: column;
+    }
+}
+
+/* Cats Section */
+.cats-section {
+    padding: 6rem 4rem;
+    background: var(--bg-card);
+    border-top: 1px solid var(--border);
+    text-align: center;
+}
+
+.cats-header {
+    margin-bottom: 3rem;
+}
+
+.cats-header h2 {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.cats-header p {
+    color: var(--text-secondary);
+    font-size: 1.125rem;
+}
+
+.cats-gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 2rem;
+    max-width: 1200px;
+    margin: 0 auto 3rem;
+}
+
+.cat-card {
+    position: relative;
+    border-radius: 16px;
+    overflow: hidden;
+    aspect-ratio: 1;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.cat-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 20px 40px rgba(99, 102, 241, 0.3);
+}
+
+.cat-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: all 0.3s ease;
+}
+
+.cat-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 1rem;
+    background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+    color: white;
+    font-weight: 600;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.cat-card:hover .cat-overlay {
+    opacity: 1;
+}
+
+.cats-section .btn {
+    margin-top: 1rem;
+}
 
     .subtitle {
         margin: 0 auto 2.5rem;

@@ -20,6 +20,7 @@
         </div>
         <nav class="nav">
             <a href="#about">О нас</a>
+            <a href="#cats">Котики</a>
             <a href="#services">Услуги</a>
             <a href="#contact">Контакты</a>
         </nav>
@@ -58,22 +59,38 @@
         </div>
     </main>
 
-    <section class="features" id="services">
-        <div class="feature">
-            <div class="feature-icon">⚡</div>
-            <h3>ML-решения</h3>
-            <p>Машинное обучение любой сложности для вашего бизнеса</p>
+    <section class="cats-section" id="cats">
+        <div class="cats-header">
+            <h2>Котики для хорошего настроения 🐱</h2>
+            <p>Наши AI-модели тоже любят котиков!</p>
         </div>
-        <div class="feature">
-            <div class="feature-icon">🔮</div>
-            <h3>Нейросети</h3>
-            <p>Кастомные нейронные сети под любые задачи</p>
+        <div class="cats-gallery">
+            <div class="cat-card">
+                <img src="https://cute-cat-avatars.laosing-cors.workers.dev/api/v1/random" alt="Котик 1" class="cat-image">
+                <div class="cat-overlay">Мурчальчик</div>
+            </div>
+            <div class="cat-card">
+                <img src="https://cute-cat-avatars.laosing-cors.workers.dev/api/v1/random" alt="Котик 2" class="cat-image">
+                <div class="cat-overlay">Пушистик</div>
+            </div>
+            <div class="cat-card">
+                <img src="https://cute-cat-avatars.laosing-cors.workers.dev/api/v1/random" alt="Котик 3" class="cat-image">
+                <div class="cat-overlay">Кис-кис</div>
+            </div>
+            <div class="cat-card">
+                <img src="https://cute-cat-avatars.laosing-cors.workers.dev/api/v1/random" alt="Котик 4" class="cat-image">
+                <div class="cat-overlay">Мяу-мяу</div>
+            </div>
+            <div class="cat-card">
+                <img src="https://cute-cat-avatars.laosing-cors.workers.dev/api/v1/random" alt="Котик 5" class="cat-image">
+                <div class="cat-overlay">Лапочка</div>
+            </div>
+            <div class="cat-card">
+                <img src="https://cute-cat-avatars.laosing-cors.workers.dev/api/v1/random" alt="Котик 6" class="cat-image">
+                <div class="cat-overlay">Хвостатик</div>
+            </div>
         </div>
-        <div class="feature">
-            <div class="feature-icon">🎯</div>
-            <h3>AI-консалтинг</h3>
-            <p>Экспертная помощь во внедрении ИИ-технологий</p>
-        </div>
+        <button class="btn btn-secondary" onclick="refreshCats()">Обновить котиков 🔄</button>
     </section>
 
     <section class="contact" id="contact">
@@ -96,7 +113,15 @@
     </footer>
 
     <script>
-        // Анимация появления при скролле
+        function refreshCats() {
+            const catImages = document.querySelectorAll('.cat-image');
+            catImages.forEach(img => {
+                const timestamp = new Date().getTime();
+                const currentSrc = img.src.split('?')[0];
+                img.src = currentSrc + '?t=' + timestamp;
+            });
+        }
+
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
@@ -105,11 +130,10 @@
             });
         }, { threshold: 0.1 });
 
-        document.querySelectorAll('.feature, .contact-content').forEach(el => {
+        document.querySelectorAll('.feature, .contact-content, .cats-section, .cat-card').forEach(el => {
             observer.observe(el);
         });
 
-        // Плавающая анимация для orbs
         document.addEventListener('mousemove', (e) => {
             const orbs = document.querySelectorAll('.orb');
             const x = e.clientX / window.innerWidth;
