@@ -7,12 +7,12 @@
     <link rel="stylesheet" href="styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800;900&family=IBM+Plex+Mono:wght@300;400;500;600&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div class="noise"></div>
-    <div class="grid-bg"></div>
-    
+    <div class="scanlines"></div>
+    <div class="bg-pattern"></div>
+
     <header class="header">
         <div class="logo">
             <span class="logo-icon">◈</span>
@@ -43,7 +43,7 @@
                 <a href="#about" class="btn btn-secondary">Узнать больше</a>
             </div>
         </div>
-        
+
         <div class="hero-visual">
             <div class="orb orb-1"></div>
             <div class="orb orb-2"></div>
@@ -60,23 +60,22 @@
     </main>
 
     <section class="cats-section" id="cats">
+        <div class="section-divider">
+            <span class="divider-gem"></span>
+        </div>
         <div class="cats-header">
-            <h2>Котики для хорошего настроения 🐱</h2>
-            <p>Наши AI-модели тоже любят котиков!</p>
+            <h2>Котики для хорошего настроения</h2>
+            <p>Каждые 5 секунд наши котики обновляют свой облик. Нажми на карточку для мгновенного обновления!</p>
         </div>
-        <div class="cats-gallery">
-            <img src="https://cdn2.thecatapi.com/images/29t.jpg" alt="Котик 1" class="cat-image">
-            <img src="https://cdn2.thecatapi.com/images/3qu.jpg" alt="Котик 2" class="cat-image">
-            <img src="https://cdn2.thecatapi.com/images/4ko.gif" alt="Котик 3" class="cat-image">
-            <img src="https://cdn2.thecatapi.com/images/agh.jpg" alt="Котик 4" class="cat-image">
-            <img src="https://cdn2.thecatapi.com/images/b3e.jpg" alt="Котик 5" class="cat-image">
-            <img src="https://cdn2.thecatapi.com/images/MTYyNTY0MA.jpg" alt="Котик 6" class="cat-image">
-        </div>
-        <button class="btn btn-secondary" onclick="refreshCats()">Обновить котиков 🔄</button>
+        <div class="cats-gallery" id="cats-gallery"></div>
+        <p class="refresh-hint">Автообновление каждые 5 сек · Нажми на карточку для реролла</p>
     </section>
 
     <section class="contact" id="contact">
         <div class="contact-content">
+            <div class="section-divider">
+                <span class="divider-gem"></span>
+            </div>
             <h2>Готовы начать?</h2>
             <p>Расскажите нам о своей идее — и мы поможем воплотить её в жизнь</p>
             <a href="mailto:hello@etotema.ru" class="email-link">hello@etotema.ru</a>
@@ -89,45 +88,11 @@
                 <span class="logo-icon">◈</span>
                 <span>Это Тема</span>
             </div>
-            <p class="copyright">© 2026 Это Тема. Все права защищены.</p>
+            <p class="copyright">&copy; 2026 Это Тема. Все права защищены.</p>
             <p class="tagline">Искусственный интеллект. Человечность.</p>
         </div>
     </footer>
 
-    <script>
-        async function refreshCats() {
-            const imgs = document.querySelectorAll('.cat-image');
-            try {
-                const res = await fetch('https://api.thecatapi.com/v1/images/search?limit=6');
-                const data = await res.json();
-                imgs.forEach((img, i) => {
-                    img.src = data[i].url;
-                });
-            } catch(e) {
-                imgs.forEach(img => {
-                    img.src = 'https://api.thecatapi.com/v1/images/search?size=medium&' + Date.now();
-                });
-            }
-        }
-        
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) entry.target.classList.add('visible');
-            });
-        }, { threshold: 0.1 });
-
-        document.querySelectorAll('.feature, .contact-content, .cats-section, .cat-card').forEach(el => observer.observe(el));
-
-        document.addEventListener('mousemove', (e) => {
-            const orbs = document.querySelectorAll('.orb');
-            const x = e.clientX / window.innerWidth;
-            const y = e.clientY / window.innerHeight;
-            orbs.forEach((orb, i) => {
-                orb.style.transform = `translate(${x * (i+1) * 20}px, ${y * (i+1) * 20}px)`;
-            });
-        });
-
-        refreshCats();
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
