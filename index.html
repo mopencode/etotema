@@ -162,28 +162,61 @@
                 <div class="section-header">
                     <span class="section-tag">Попробовать</span>
                     <h2 class="section-title">AI Playground</h2>
-                    <p class="section-subtitle">Введите текст — увидите, как работает наша обработка</p>
+                    <p class="section-subtitle">Введите любой запрос — AI даст обдуманный, конкретный ответ</p>
+                </div>
+                <div class="pg-api-bar" id="pg-api-bar">
+                    <span class="pg-api-status" id="pg-api-status">⚠ API ключ не задан</span>
+                    <button class="btn btn-ghost btn-sm" id="pg-settings-toggle">Настроить API</button>
+                </div>
+                <div class="pg-settings hidden" id="pg-settings">
+                    <div class="pg-settings-grid">
+                        <div class="pg-field">
+                            <label class="pg-label">API провайдер</label>
+                            <select id="pg-provider" class="pg-select pg-select-wide">
+                                <option value="openai">OpenAI</option>
+                                <option value="openrouter">OpenRouter</option>
+                                <option value="custom">Custom endpoint</option>
+                            </select>
+                        </div>
+                        <div class="pg-field">
+                            <label class="pg-label">API ключ</label>
+                            <input type="password" id="pg-apikey" class="pg-input-key" placeholder="sk-...">
+                            <span class="pg-hint">Ключ хранится только в вашем браузере (localStorage)</span>
+                        </div>
+                        <div class="pg-field">
+                            <label class="pg-label">Модель</label>
+                            <select id="pg-model" class="pg-select pg-select-wide">
+                                <option value="gpt-4o-mini">GPT-4o Mini</option>
+                                <option value="gpt-4o">GPT-4o</option>
+                                <option value="gpt-4o-mini">GPT-4o Mini</option>
+                            </select>
+                        </div>
+                        <div class="pg-field hidden" id="pg-endpoint-field">
+                            <label class="pg-label">Custom endpoint</label>
+                            <input type="text" id="pg-endpoint" class="pg-input-key" placeholder="https://api.example.com/v1/chat/completions">
+                        </div>
+                    </div>
+                    <button class="btn btn-primary btn-sm" id="pg-save-settings">Сохранить</button>
                 </div>
                 <div class="playground">
                     <div class="playground-input">
-                        <label for="pg-input" class="pg-label">Входной текст</label>
-                        <textarea id="pg-input" class="pg-textarea" placeholder="Например: Подготовь отчёт по продажам за Q1 и выдели 3 основных тренда..." rows=4></textarea>
+                        <label for="pg-input" class="pg-label">Запрос</label>
+                        <textarea id="pg-input" class="pg-textarea" placeholder="Задайте любой вопрос...&#10;&#10;Например: Как AI может ускорить обработку заявок в банке на 40%?" rows=5></textarea>
                         <div class="pg-controls">
-                            <select id="pg-model" class="pg-select">
-                                <option value="etotema-4">Это Тема-4</option>
-                                <option value="etotema-mini">Это Тема Mini</option>
-                                <option value="etotema-vision">Это Тема Vision</option>
+                            <select id="pg-model-display" class="pg-select">
+                                <option value="gpt-4o-mini">GPT-4o Mini</option>
+                                <option value="gpt-4o">GPT-4o</option>
                             </select>
-                            <button class="btn btn-primary btn-sm" id="pg-run">Запустить</button>
+                            <button class="btn btn-primary btn-sm" id="pg-run">Отправить</button>
                         </div>
                     </div>
                     <div class="playground-output">
                         <div class="pg-output-header">
-                            <span class="pg-label">Результат</span>
+                            <span class="pg-label">Ответ</span>
                             <span class="pg-meta" id="pg-meta"></span>
                         </div>
                         <div class="pg-output-body" id="pg-output">
-                            <span class="pg-placeholder">Результат появится здесь...</span>
+                            <span class="pg-placeholder">Настройте API ключ и задайте вопрос...</span>
                         </div>
                     </div>
                 </div>

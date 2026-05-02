@@ -575,15 +575,95 @@ section {
   animation: blink 0.8s step-end infinite;
 }
 
-.pg-placeholder {
-  color: var(--text-tertiary);
-}
+.pg-placeholder { color: var(--text-tertiary); }
 
-.pg-result-line {
-  margin-bottom: 0.3rem;
-}
-
+.pg-result-line { margin-bottom: 0.3rem; white-space: pre-wrap; word-break: break-word; }
 .pg-result-line.success { color: var(--success); }
+.pg-result-line.error { color: #EF4444; }
+
+.pg-api-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+  padding: 0.75rem 1rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+}
+
+.pg-api-status {
+  font-size: 0.82rem;
+  font-weight: 500;
+}
+
+.pg-api-status.connected { color: var(--success); }
+.pg-api-status.disconnected { color: #F59E0B; }
+
+.hidden { display: none !important; }
+
+#pg-model { display: none; }
+
+.pg-settings {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.pg-settings.hidden { display: none; }
+
+.pg-settings-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.pg-input-key {
+  width: 100%;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 0.6rem 0.8rem;
+  color: var(--text);
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  transition: border-color var(--transition);
+}
+
+.pg-input-key:focus { outline: none; border-color: var(--accent); }
+.pg-input-key::placeholder { color: var(--text-tertiary); }
+
+.pg-select-wide { width: 100%; }
+
+.pg-hint {
+  display: block;
+  font-size: 0.72rem;
+  color: var(--text-tertiary);
+  margin-top: 0.3rem;
+}
+
+#pg-run:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+#pg-run.loading {
+  background: var(--text-tertiary);
+  pointer-events: none;
+}
+
+.pg-output-body p { margin-bottom: 0.6rem; }
+.pg-output-body strong { color: var(--text); font-weight: 600; }
+.pg-output-body ul, .pg-output-body ol { margin: 0.5rem 0; padding-left: 1.5rem; }
+.pg-output-body li { margin-bottom: 0.25rem; }
+.pg-output-body code { background: var(--surface-2); padding: 0.15rem 0.4rem; border-radius: 3px; font-size: 0.82rem; }
+.pg-output-body h1, .pg-output-body h2, .pg-output-body h3 { font-weight: 700; margin: 1rem 0 0.5rem; color: var(--text); }
+.pg-output-body h1 { font-size: 1.2rem; }
+.pg-output-body h2 { font-size: 1.05rem; }
+.pg-output-body h3 { font-size: 0.95rem; }
 
 /* ===== CALCULATOR ===== */
 .calculator {
