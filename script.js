@@ -15,11 +15,8 @@
       endpoint: 'https://text.pollinations.ai/openai/chat/completions',
       needsKey: false,
       models: [
-        { value: 'openai', label: 'GPT-4o Mini (бесплатно)' },
-        { value: 'mistral', label: 'Mistral (бесплатно)' },
-        { value: 'llama', label: 'Llama 3.3 (бесплатно)' },
-        { value: 'deepseek', label: 'DeepSeek (бесплатно)' },
-        { value: 'qwen', label: 'Qwen 2.5 (бесплатно)' }
+        { value: 'openai', label: 'Это Тема AI (бесплатно)' },
+        { value: 'openai-fast', label: 'Это Тема AI Fast (бесплатно)' }
       ]
     },
     openai: {
@@ -307,20 +304,42 @@
       };
     }
 
-    function renderMarkdown(text) {
+function renderMarkdown(text) {
       var html = text;
       html = html.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+
+      html = html.replace(/```(\w*)\n([\s\S]*?)```/g, function (match, lang, code) {
+        return '<pre><code' + (lang ? ' class="language-' + lang + '"' : '') + '>' + code.trim() + '</code></pre>';
+      });
 
       html = html.replace(/^### (.+)$/gm, '<h3>$1</h3>');
       html = html.replace(/^## (.+)$/gm, '<h2>$1</h2>');
       html = html.replace(/^# (.+)$/gm, '<h1>$1</h1>');
+      html = html.replace(/^---$/gm, '<hr>');
       html = html.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
       html = html.replace(/\*(.+?)\*/g, '<em>$1</em>');
       html = html.replace(/`([^`]+)`/g, '<code>$1</code>');
+
+      html = html.replace(/(\|.+\|[\r\n]+\|[-| :]+\|[\r\n]+((\|.+\|[\r\n]*)+))/g, function (match) {
+        var rows = match.trim().split('\n').filter(function (r) { return !r.match(/^[\s|:-]+$/); });
+        var tableHtml = '<table><thead><tr>';
+        var headerCells = rows[0].split('|').filter(function (c) { return c.trim(); });
+        headerCells.forEach(function (c) { tableHtml += '<th>' + c.trim() + '</th>'; });
+        tableHtml += '</tr></thead><tbody>';
+        for (var i = 1; i < rows.length; i++) {
+          var cells = rows[i].split('|').filter(function (c) { return c.trim(); });
+          tableHtml += '<tr>';
+          cells.forEach(function (c) { tableHtml += '<td>' + c.trim() + '</td>'; });
+          tableHtml += '</tr>';
+        }
+        tableHtml += '</tbody></table>';
+        return tableHtml;
+      });
+
       html = html.replace(/^- (.+)$/gm, '<li>$1</li>');
       html = html.replace(/^(\d+)\. (.+)$/gm, '<li>$2</li>');
 
-      html = html.replace(/(<li>[\s\S]*?<\/li>\n?)+/g, function (match) {
+      html = html.replace(/(<li>[\s\S]*?<\/li>(\s*|$))+/g, function (match) {
         return '<ul>' + match + '</ul>';
       });
 
@@ -332,6 +351,13 @@
       html = html.replace(/(<\/h[123]>)<\/p>/g, '$1');
       html = html.replace(/<p>(<ul>)/g, '$1');
       html = html.replace(/(<\/ul>)<\/p>/g, '$1');
+      html = html.replace(/<p>(<table>)/g, '$1');
+      html = html.replace(/(<\/table>)<\/p>/g, '$1');
+      html = html.replace(/<p>(<pre>)/g, '$1');
+      html = html.replace(/(<\/pre>)<\/p>/g, '$1');
+      html = html.replace(/<p>(<hr>)<\/p>/g, '$1');
+      html = html.replace(/<p>(<hr>)/g, '$1');
+      html = html.replace(/(<hr>)<\/p>/g, '$1');
 
       return html;
     }

@@ -664,6 +664,14 @@ section {
 .pg-output-body h1 { font-size: 1.2rem; }
 .pg-output-body h2 { font-size: 1.05rem; }
 .pg-output-body h3 { font-size: 0.95rem; }
+.pg-output-body table { width: 100%; border-collapse: collapse; margin: 0.75rem 0; font-size: 0.82rem; }
+.pg-output-body th, .pg-output-body td { border: 1px solid var(--border); padding: 0.4rem 0.6rem; text-align: left; }
+.pg-output-body th { background: var(--surface-2); font-weight: 600; color: var(--text); }
+.pg-output-body td { color: var(--text-secondary); }
+.pg-output-body pre { background: var(--surface-2); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 0.75rem 1rem; margin: 0.75rem 0; overflow-x: auto; line-height: 1.5; }
+.pg-output-body pre code { background: none; padding: 0; border-radius: 0; font-size: 0.82rem; }
+.pg-output-body blockquote { border-left: 3px solid var(--accent); padding-left: 1rem; margin: 0.75rem 0; color: var(--text-secondary); }
+.pg-output-body hr { border: none; border-top: 1px solid var(--border); margin: 1rem 0; }
 
 /* ===== CALCULATOR ===== */
 .calculator {
