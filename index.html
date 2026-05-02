@@ -11,8 +11,20 @@
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>◈</text></svg>">
 </head>
 <body>
+    <div class="loader" id="loader">
+        <div class="loader-inner">
+            <div class="loader-icon">◈</div>
+            <div class="loader-bar"><div class="loader-fill" id="loader-fill"></div></div>
+        </div>
+    </div>
+
     <canvas id="particles"></canvas>
     <div class="cursor-glow" id="cursor-glow"></div>
+    <div class="floating-shapes">
+        <div class="float-shape"></div>
+        <div class="float-shape"></div>
+        <div class="float-shape"></div>
+    </div>
 
     <header class="header" id="header">
         <a href="#" class="logo">

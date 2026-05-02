@@ -8,6 +8,36 @@
   var TYPING_PAUSE = 2000;
   var TYPING_DELETE_SPEED = 30;
 
+  function initLoader() {
+    var fill = document.getElementById('loader-fill');
+    var loader = document.getElementById('loader');
+    if (!fill || !loader) return;
+    var pct = 0;
+    var iv = setInterval(function () {
+      pct += Math.random() * 25 + 5;
+      if (pct > 95) pct = 95;
+      fill.style.width = pct + '%';
+    }, 200);
+
+    window.addEventListener('load', function () {
+      clearInterval(iv);
+      fill.style.width = '100%';
+      setTimeout(function () {
+        loader.classList.add('done');
+        setTimeout(function () { loader.style.display = 'none'; }, 500);
+      }, 300);
+    });
+
+    setTimeout(function () {
+      clearInterval(iv);
+      fill.style.width = '100%';
+      setTimeout(function () {
+        loader.classList.add('done');
+        setTimeout(function () { loader.style.display = 'none'; }, 500);
+      }, 300);
+    }, 3000);
+  }
+
   function initParticles() {
     var canvas = document.getElementById('particles');
     if (!canvas) return;
@@ -158,7 +188,12 @@
           var progress = Math.min((now - start) / duration, 1);
           var eased = 1 - Math.pow(1 - progress, 3);
           el.textContent = Math.round(eased * target) + suffix;
-          if (progress < 1) requestAnimationFrame(step);
+          if (progress < 1) {
+            requestAnimationFrame(step);
+          } else {
+            el.classList.add('pulse');
+            setTimeout(function () { el.classList.remove('pulse'); }, 400);
+          }
         }
         requestAnimationFrame(step);
         observer.unobserve(el);
@@ -204,22 +239,37 @@
     update();
   }
 
-  function initCardTilt() {
+function initCardTilt() {
     if (window.innerWidth < 768) return;
     var cards = document.querySelectorAll('.card-tilt');
     cards.forEach(function (card) {
+      var spotlight = document.createElement('div');
+      spotlight.className = 'card-spotlight';
+      card.appendChild(spotlight);
+
       card.addEventListener('mousemove', function (e) {
         var rect = card.getBoundingClientRect();
         var x = e.clientX - rect.left;
         var y = e.clientY - rect.top;
-        var rotateX = (y - rect.height / 2) / (rect.height / 2) * -6;
-        var rotateY = (x - rect.width / 2) / (rect.width / 2) * 6;
+        var rotateX = (y - rect.height / 2) / (rect.height / 2) * -5;
+        var rotateY = (x - rect.width / 2) / (rect.width / 2) * 5;
         card.style.transform = 'perspective(800px) rotateX(' + rotateX + 'deg) rotateY(' + rotateY + 'deg) translateY(-4px)';
+        spotlight.style.left = x + 'px';
+        spotlight.style.top = y + 'px';
       });
-      card.addEventListener('mouseleave', function () { card.style.transform = ''; });
+
+      card.addEventListener('mouseleave', function () {
+        card.style.transform = '';
+        spotlight.style.opacity = '0';
+      });
+
       card.addEventListener('click', function () {
         var modalId = card.getAttribute('data-modal');
         if (modalId) openModal(modalId);
+      });
+
+      card.addEventListener('mouseenter', function () {
+        spotlight.style.opacity = '1';
       });
     });
   }
@@ -645,4 +695,5 @@
   initSmoothScroll();
   initTagHover();
   initRipple();
+  initLoader();
 })();
