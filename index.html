@@ -22,14 +22,18 @@
         <nav class="nav" id="nav">
             <a href="#services">Услуги</a>
             <a href="#how">Процесс</a>
+            <a href="#cases">Кейсы</a>
             <a href="#roi">Калькулятор</a>
             <a href="#faq">FAQ</a>
             <a href="#pricing">Тарифы</a>
             <a href="#contact" class="nav-cta">Обсудить проект</a>
         </nav>
-        <button class="nav-toggle" id="nav-toggle" aria-label="Меню">
-            <span></span><span></span><span></span>
-        </button>
+        <div class="header-actions">
+            <button class="theme-toggle" id="theme-toggle" title="Сменить тему">☼</button>
+            <button class="nav-toggle" id="nav-toggle" aria-label="Меню">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
     </header>
 
     <section class="hero">
@@ -41,8 +45,20 @@
         </h1>
         <p class="hero-sub" data-anim>Аудит, прототип, интеграция, поддержка — полный цикл. Без воды, с конкретным результатом.</p>
         <div class="hero-actions" data-anim>
-            <a href="#contact" class="btn btn-primary btn-glow">Начать проект</a>
-            <a href="#how" class="btn btn-outline">Как это работает</a>
+            <a href="#contact" class="btn btn-primary btn-glow magnetic">Начать проект</a>
+            <a href="#how" class="btn btn-outline magnetic">Как это работает</a>
+        </div>
+        <div class="hero-tags" data-anim>
+            <span class="hero-tag" data-tag-hover>GPT-4</span>
+            <span class="hero-tag" data-tag-hover>Claude</span>
+            <span class="hero-tag" data-tag-hover>Gemini</span>
+            <span class="hero-tag" data-tag-hover>Llama</span>
+            <span class="hero-tag" data-tag-hover>RAG</span>
+            <span class="hero-tag" data-tag-hover>Fine-tuning</span>
+            <span class="hero-tag" data-tag-hover>On-premise</span>
+            <span class="hero-tag" data-tag-hover>API</span>
+            <span class="hero-tag" data-tag-hover>NLP</span>
+            <span class="hero-tag" data-tag-hover>Computer Vision</span>
         </div>
         <div class="hero-stats" data-anim>
             <div class="stat-item">
@@ -60,15 +76,32 @@
         </div>
     </section>
 
-    <section class="logos" data-anim>
-        <p class="logos-label">Нам доверяют</p>
-        <div class="logos-track">
-            <span class="logo-item">Сбер</span>
-            <span class="logo-item">Тинькофф</span>
-            <span class="logo-item">Яндекс</span>
-            <span class="logo-item">ВТБ</span>
-            <span class="logo-item">МТС</span>
-            <span class="logo-item">Ozon</span>
+    <section class="marquee-section" data-anim>
+        <div class="marquee-track">
+            <div class="marquee-content">
+                <span class="marquee-item">✦ AI-аудит</span>
+                <span class="marquee-item">✦ Кастомные модели</span>
+                <span class="marquee-item">✦ API интеграция</span>
+                <span class="marquee-item">✦ Обучение команды</span>
+                <span class="marquee-item">✦ GPT-4</span>
+                <span class="marquee-item">✦ Claude</span>
+                <span class="marquee-item">✦ Gemini</span>
+                <span class="marquee-item">✦ On-premise</span>
+                <span class="marquee-item">✦ 200+ проектов</span>
+                <span class="marquee-item">✦ 99.9% аптайм</span>
+            </div>
+            <div class="marquee-content" aria-hidden="true">
+                <span class="marquee-item">✦ AI-аудит</span>
+                <span class="marquee-item">✦ Кастомные модели</span>
+                <span class="marquee-item">✦ API интеграция</span>
+                <span class="marquee-item">✦ Обучение команды</span>
+                <span class="marquee-item">✦ GPT-4</span>
+                <span class="marquee-item">✦ Claude</span>
+                <span class="marquee-item">✦ Gemini</span>
+                <span class="marquee-item">✦ On-premise</span>
+                <span class="marquee-item">✦ 200+ проектов</span>
+                <span class="marquee-item">✦ 99.9% аптайм</span>
+            </div>
         </div>
     </section>
 
@@ -115,7 +148,7 @@
             <h2 class="section-title" data-anim>Как мы работаем<span class="title-dot">.</span></h2>
             <div class="timeline">
                 <div class="timeline-item" data-anim>
-                    <div class="timeline-marker step-marker active">01</div>
+                    <div class="timeline-marker step-marker">01</div>
                     <div class="timeline-content">
                         <h3>Аудит</h3>
                         <p>Изучаем процессы, считаем ROI, фиксируем метрики «до». Результат — дорожная карта.</p>
@@ -180,6 +213,50 @@
         </div>
     </section>
 
+    <section class="cases" id="cases">
+        <div class="container">
+            <div class="section-label" data-anim>Кейсы</div>
+            <h2 class="section-title" data-anim>Результаты, которые говорят сами за себя<span class="title-dot">.</span></h2>
+            <div class="cases-track" id="cases-track">
+                <div class="case-card" data-anim>
+                    <div class="case-tag">Финтех</div>
+                    <h3 class="case-title">Автокредитный скоринг для банка</h3>
+                    <p class="case-desc">GPT-модель анализирует заявки за 2 секунды вместо 15 минут ручной проверки.</p>
+                    <div class="case-stats">
+                        <div class="case-stat"><span class="case-stat-val">92%</span><span class="case-stat-label">Точность</span></div>
+                        <div class="case-stat"><span class="case-stat-val">-70%</span><span class="case-stat-label">Время</span></div>
+                        <div class="case-stat"><span class="case-stat-val">3.2x</span><span class="case-stat-label">ROI</span></div>
+                    </div>
+                </div>
+                <div class="case-card" data-anim data-delay="1">
+                    <div class="case-tag">E-commerce</div>
+                    <h3 class="case-title">Персонализация рекомендаций</h3>
+                    <p class="case-desc">RAG-система на основе истории покупок повышает конверсию и средний чек.</p>
+                    <div class="case-stats">
+                        <div class="case-stat"><span class="case-stat-val">+45%</span><span class="case-stat-label">Конверсия</span></div>
+                        <div class="case-stat"><span class="case-stat-val">+28%</span><span class="case-stat-label">Средний чек</span></div>
+                        <div class="case-stat"><span class="case-stat-val">5x</span><span class="case-stat-label">ROI</span></div>
+                    </div>
+                </div>
+                <div class="case-card" data-anim data-delay="2">
+                    <div class="case-tag">HR-tech</div>
+                    <h3 class="case-title">AI-ассистент для рекрутинга</h3>
+                    <p class="case-desc">Автоматический скрининг резюме и первичное общение с кандидатами 24/7.</p>
+                    <div class="case-stats">
+                        <div class="case-stat"><span class="case-stat-val">-80%</span><span class="case-stat-label">Время найма</span></div>
+                        <div class="case-stat"><span class="case-stat-val">4.1x</span><span class="case-stat-label">ROI</span></div>
+                        <div class="case-stat"><span class="case-stat-val">1000+</span><span class="case-stat-label">Резюме/день</span></div>
+                    </div>
+                </div>
+            </div>
+            <div class="cases-arrows" data-anim>
+                <button class="case-arrow case-arrow-left" id="case-left">←</button>
+                <div class="cases-dots" id="cases-dots"></div>
+                <button class="case-arrow case-arrow-right" id="case-right">→</button>
+            </div>
+        </div>
+    </section>
+
     <section class="roi" id="roi">
         <div class="container">
             <div class="section-label" data-anim>Калькулятор</div>
@@ -203,7 +280,7 @@
                     <div class="slider-group">
                         <div class="slider-header">
                             <label class="slider-label">Средняя стоимость часа (₽)</label>
-                            <span class="slider-value" id="roi-rate-val">1500</span>
+                            <span class="slider-value" id="roi-rate-val">1 500</span>
                         </div>
                         <input type="range" id="roi-rate" class="slider" min="500" max="5000" value="1500" step="100">
                     </div>
@@ -221,7 +298,7 @@
                         <div class="roi-card-label">Окупаемость AI</div>
                         <div class="roi-card-value" id="roi-payback">~1 мес</div>
                     </div>
-                    <a href="#contact" class="btn btn-primary btn-full" style="margin-top:8px">Получить точный расчёт →</a>
+                    <a href="#contact" class="btn btn-primary btn-full btn-glow magnetic" style="margin-top:8px">Получить точный расчёт →</a>
                 </div>
             </div>
         </div>
@@ -247,7 +324,7 @@
                         <li>До 10K запросов/мес</li>
                         <li class="disabled">Кастомные модели</li>
                     </ul>
-                    <a href="#contact" class="btn btn-outline btn-full">Начать</a>
+                    <a href="#contact" class="btn btn-outline btn-full magnetic">Начать</a>
                 </div>
                 <div class="pricing-card pricing-card--popular" data-anim>
                     <div class="popular-badge">Популярный</div>
@@ -261,7 +338,7 @@
                         <li>До 100K запросов/мес</li>
                         <li>Кастомные модели</li>
                     </ul>
-                    <a href="#contact" class="btn btn-primary btn-full">Начать</a>
+                    <a href="#contact" class="btn btn-primary btn-full btn-glow magnetic">Начать</a>
                 </div>
                 <div class="pricing-card" data-anim>
                     <div class="pricing-name">Enterprise</div>
@@ -274,7 +351,7 @@
                         <li>Неограниченные запросы</li>
                         <li>Выделенная инфраструктура</li>
                     </ul>
-                    <a href="#contact" class="btn btn-outline btn-full">Связаться</a>
+                    <a href="#contact" class="btn btn-outline btn-full magnetic">Связаться</a>
                 </div>
             </div>
         </div>
@@ -327,7 +404,7 @@
                         <span class="faq-icon">+</span>
                     </button>
                     <div class="faq-answer">
-                        <p>Нет. Мыберём на себя всё: от анализа до поддержки. Но если есть техкоманда — вовлекаем её для масштабирования и обучения.</p>
+                        <p>Нет. Мы берём на себя всё: от анализа до поддержки. Но если есть техкоманда — вовлекаем её для масштабирования и обучения.</p>
                     </div>
                 </div>
                 <div class="faq-item">
@@ -354,7 +431,7 @@
                         <input type="email" class="form-input" placeholder="Email" required>
                     </div>
                     <textarea class="form-input form-textarea" placeholder="Опишите задачу или напишите «нужен AI-аудит»" rows="3" required></textarea>
-                    <button type="submit" class="btn btn-primary btn-full btn-glow">Отправить заявку →</button>
+                    <button type="submit" class="btn btn-primary btn-full btn-glow magnetic" id="submit-btn">Отправить заявку →</button>
                 </form>
             </div>
         </div>
@@ -376,6 +453,14 @@
         </div>
     </footer>
 
+    <button class="back-to-top" id="back-to-top" title="Наверх">
+        <svg class="progress-ring" viewBox="0 0 44 44">
+            <circle class="progress-ring-bg" cx="22" cy="22" r="18" />
+            <circle class="progress-ring-fill" id="progress-ring" cx="22" cy="22" r="18" />
+        </svg>
+        <span class="back-to-top-arrow">↑</span>
+    </button>
+
     <div class="modal-overlay" id="modal-overlay">
         <div class="modal" id="modal">
             <button class="modal-close" id="modal-close">✕</button>
@@ -383,6 +468,8 @@
             <div class="modal-body" id="modal-body"></div>
         </div>
     </div>
+
+    <canvas id="confetti"></canvas>
 
     <script src="script.js"></script>
 </body>
