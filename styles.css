@@ -156,13 +156,15 @@ body.light-theme .float-shape { opacity: 0.03; }
 
 body.light-theme .header { background: rgba(245,245,250,0.75); }
 
-.header .container {
+.header .container,
+.header .header-inner {
   max-width: 1120px;
   margin: 0 auto;
   padding: 0 24px;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  width: 100%;
 }
 
 .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--text); font-weight: 800; font-size: 1.2rem; letter-spacing: -0.02em; }
@@ -519,9 +521,14 @@ body.light-theme .card-number { color: rgba(0,0,30,0.04); }
 .faq-question:hover { color: var(--accent-light); }
 .faq-icon { font-size: 1.3rem; font-weight: 300; color: var(--accent-light); transition: transform 0.3s ease; flex-shrink: 0; margin-left: 12px; }
 .faq-item.open .faq-icon { transform: rotate(45deg); }
-.faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.35s ease; }
-.faq-item.open .faq-answer { max-height: 200px; }
-.faq-answer p { padding: 0 22px 18px; color: var(--text-secondary); font-size: 0.88rem; line-height: 1.7; }
+.faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1), padding 0.3s ease; }
+.faq-item.open .faq-answer { max-height: 400px; }
+.faq-answer p {
+  padding: 0 22px 20px;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  line-height: 1.75;
+}
 
 /* CTA */
 .cta { padding: 100px 0; position: relative; z-index: 2; }
@@ -583,7 +590,16 @@ body.light-theme .card-number { color: rgba(0,0,30,0.04); }
 
 @media (max-width: 640px) {
   .nav { display: none; }
-  .nav.open { display: flex; flex-direction: column; position: fixed; inset: 0; background: var(--bg); padding: 80px 24px 24px; gap: 20px; z-index: 99; }
+  .nav.open {
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  inset: 0;
+  background: var(--bg);
+  padding: 80px 24px 24px;
+  gap: 20px;
+  z-index: 99;
+}
   .nav.open a { font-size: 1.15rem; }
   .nav-toggle { display: flex; }
   .hero-title { font-size: 2.1rem; }
