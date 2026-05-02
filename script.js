@@ -2,42 +2,36 @@
   'use strict';
 
   var ANIM_THRESHOLD = 0.15;
-
-  var SYSTEM_PROMPT = 'Ты — AI-ассистент компании «Это Тема». ' +
-    'Отвечай на русском. Конкретно, структурированно, без воды. ' +
-    'Используй **жирный**, списки, заголовки ##.';
+  var SYSTEM_PROMPT = 'Ты — AI-ассистент компании «Это Тема». Отвечай на русском. Конкретно, структурированно, без воды. Используй **жирный**, списки, заголовки ##.';
+  var API_URL = 'https://text.pollinations.ai/openai/chat/completions';
+  var MAX_RETRIES = 3;
+  var RETRY_DELAY = 2000;
 
   function initScrollAnimations() {
     var els = document.querySelectorAll('[data-anim]');
     if (!els.length) return;
     var obs = new IntersectionObserver(function (entries) {
-      entries.forEach(function (entry) {
-        if (entry.isIntersecting) { entry.target.classList.add('visible'); obs.unobserve(entry.target); }
-      });
+      entries.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
     }, { threshold: ANIM_THRESHOLD });
     els.forEach(function (el) { obs.observe(el); });
   }
 
   function initCountUp() {
     var els = document.querySelectorAll('.stat-value, .metric-value');
-    var animated = new Set();
-    function animate(el) {
-      if (animated.has(el)) return;
-      animated.add(el);
-      var target = parseInt(el.dataset.target, 10);
-      if (isNaN(target)) return;
-      var duration = 1500, start = performance.now();
-      var suffix = el.dataset.suffix || '';
+    var done = new Set();
+    function anim(el) {
+      if (done.has(el)) return; done.add(el);
+      var t = parseInt(el.dataset.target, 10); if (isNaN(t)) return;
+      var dur = 1500, s = performance.now(), sf = el.dataset.suffix || '';
       function tick(now) {
-        var p = Math.min((now - start) / duration, 1);
-        el.textContent = Math.floor((1 - Math.pow(1 - p, 3)) * target).toLocaleString('ru-RU') + suffix;
-        if (p < 1) requestAnimationFrame(tick);
-        else el.textContent = target.toLocaleString('ru-RU') + suffix;
+        var p = Math.min((now - s) / dur, 1);
+        el.textContent = Math.floor((1 - Math.pow(1 - p, 3)) * t).toLocaleString('ru-RU') + sf;
+        if (p < 1) requestAnimationFrame(tick); else el.textContent = t.toLocaleString('ru-RU') + sf;
       }
       requestAnimationFrame(tick);
     }
     var obs = new IntersectionObserver(function (entries) {
-      entries.forEach(function (entry) { if (entry.isIntersecting) { animate(entry.target); obs.unobserve(entry.target); } });
+      entries.forEach(function (e) { if (e.isIntersecting) { anim(e.target); obs.unobserve(e.target); } });
     }, { threshold: ANIM_THRESHOLD });
     els.forEach(function (el) { obs.observe(el); });
   }
@@ -46,7 +40,7 @@
     if (!text) return '';
     var h = text;
     h = h.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-    h = h.replace(/```(\w*)\n([\s\S]*?)```/g, function (m, lang, code) { return '<pre><code>' + code.trim() + '</code></pre>'; });
+    h = h.replace(/```(\w*)\n([\s\S]*?)```/g, function (m, l, c) { return '<pre><code>' + c.trim() + '</code></pre>'; });
     h = h.replace(/^### (.+)$/gm, '<h3>$1</h3>');
     h = h.replace(/^## (.+)$/gm, '<h2>$1</h2>');
     h = h.replace(/^# (.+)$/gm, '<h1>$1</h1>');
@@ -68,9 +62,10 @@
     h = h.replace(/<p>(<pre>)/g, '$1');
     h = h.replace(/(<\/pre>)<\/p>/g, '$1');
     h = h.replace(/<p>(<hr>)/g, '$1');
-    h = h.replace(/(<hr>)<\/p>/g, '$1');
     return h;
   }
+
+  function sleep(ms) { return new Promise(function (r) { setTimeout(r, ms); }); }
 
   function initPlayground() {
     var runBtn = document.getElementById('pg-run');
@@ -96,40 +91,69 @@
       });
     }
 
-    async function callAI(message) {
-      var body = JSON.stringify({
-        model: 'openai-fast',
-        messages: [
-          { role: 'system', content: SYSTEM_PROMPT },
-          { role: 'user', content: message }
-        ],
-        temperature: 0.7,
-        max_tokens: 2048
-      });
+    async function callAI(message, attempt) {
+      var attemptNum = attempt || 1;
 
       try {
-        var response = await fetch('https://text.pollinations.ai/openai/chat/completions', {
+        var response = await fetch(API_URL, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: body
+          body: JSON.stringify({
+            model: 'openai-fast',
+            messages: [
+              { role: 'system', content: SYSTEM_PROMPT },
+              { role: 'user', content: message }
+            ],
+            temperature: 0.7,
+            max_tokens: 2048
+          })
         });
 
-        if (response.status === 429) {
-          throw new Error('Сервер перегружен. Подождите 10 секунд и попробуйте снова.');
+        if (response.status === 429 || response.status === 502 || response.status === 503 || response.status === 500) {
+          if (attemptNum < MAX_RETRIES) {
+            output.innerHTML = '<div class="pg-result-line" style="color:var(--text-tertiary)">Подключение... попытка ' + (attemptNum + 1) + ' из ' + MAX_RETRIES + '</div>';
+            await sleep(RETRY_DELAY * attemptNum);
+            return callAI(message, attemptNum + 1);
+          }
+          throw new Error('Сервер временно занят. Подождите 10 секунд и попробуйте снова.');
         }
 
         if (!response.ok) {
-          throw new Error('Ошибка сервера (' + response.status + '). Попробуйте позже.');
+          throw new Error('Ошибка (' + response.status + '). Попробуйте позже.');
         }
 
-        var data = await response.json();
+        var contentType = response.headers.get('content-type') || '';
+        if (contentType.indexOf('json') === -1) {
+          if (attemptNum < MAX_RETRIES) {
+            output.innerHTML = '<div class="pg-result-line" style="color:var(--text-tertiary)">Переподключение... попытка ' + (attemptNum + 1) + '</div>';
+            await sleep(RETRY_DELAY * attemptNum);
+            return callAI(message, attemptNum + 1);
+          }
+          throw new Error('Сервер вернул неожиданный ответ. Попробуйте через 10 секунд.');
+        }
+
+        var data;
+        try { data = await response.json(); } catch (e) {
+          if (attemptNum < MAX_RETRIES) {
+            await sleep(RETRY_DELAY * attemptNum);
+            return callAI(message, attemptNum + 1);
+          }
+          throw new Error('Не удалось прочитать ответ сервера. Попробуйте снова.');
+        }
+
         if (data.choices && data.choices[0] && data.choices[0].message && data.choices[0].message.content) {
           return data.choices[0].message.content;
         }
-        throw new Error('Пустой ответ от сервера.');
+
+        throw new Error('Пустой ответ. Попробуйте снова.');
       } catch (err) {
-        if (err.message.indexOf('Failed to fetch') !== -1 || err.message.indexOf('NetworkError') !== -1 || err.message.indexOf('Load failed') !== -1) {
-          throw new Error('Не удалось подключиться к серверу. Проверьте интернет-соединение.');
+        if (err.message && (err.message.indexOf('Failed to fetch') !== -1 || err.message.indexOf('NetworkError') !== -1 || err.message.indexOf('Load failed') !== -1 || err.message.indexOf('NetworkError') !== -1)) {
+          if (attemptNum < MAX_RETRIES) {
+            output.innerHTML = '<div class="pg-result-line" style="color:var(--text-tertiary)">Переподключение... попытка ' + (attemptNum + 1) + '</div>';
+            await sleep(RETRY_DELAY * attemptNum);
+            return callAI(message, attemptNum + 1);
+          }
+          throw new Error('Нет подключения к серверу. Проверьте интернет и попробуйте снова.');
         }
         throw err;
       }
@@ -155,11 +179,10 @@
         output.innerHTML = '';
         await typewriter(fullText);
         var elapsed = ((Date.now() - startTime) / 1000).toFixed(1);
-        var tokens = Math.ceil(fullText.length / 4);
-        meta.textContent = tokens + ' токенов · ' + elapsed + 'с · Это Тема AI';
+        meta.textContent = Math.ceil(fullText.length / 4) + ' токенов · ' + elapsed + 'с · Это Тема AI';
       } catch (err) {
         output.classList.remove('processing');
-        output.innerHTML = '<div class="pg-result-line error">' + err.message + '</div>';
+        output.innerHTML = '<div class="pg-result-line error">' + (err.message || 'Неизвестная ошибка') + '</div>';
       }
 
       isProcessing = false;
@@ -218,8 +241,7 @@
         amounts.forEach(function (el) {
           var m = el.dataset.monthly, a = el.dataset.yearly;
           if (m === '0') return;
-          var val = yearly ? parseInt(a, 10) : parseInt(m, 10);
-          el.innerHTML = '\u20BD ' + val.toLocaleString('ru-RU') + '<span class="pricing-period-label">/\u043C\u0435\u0441</span>';
+          el.innerHTML = '\u20BD ' + (yearly ? parseInt(a, 10) : parseInt(m, 10)).toLocaleString('ru-RU') + '<span class="pricing-period-label">/\u043C\u0435\u0441</span>';
         });
       });
     });
@@ -252,13 +274,7 @@
   }
 
   document.addEventListener('DOMContentLoaded', function () {
-    initScrollAnimations();
-    initCountUp();
-    initPlayground();
-    initCalculator();
-    initPricing();
-    initNavToggle();
-    initHeaderScroll();
-    initContactForm();
+    initScrollAnimations(); initCountUp(); initPlayground();
+    initCalculator(); initPricing(); initNavToggle(); initHeaderScroll(); initContactForm();
   });
 })();
