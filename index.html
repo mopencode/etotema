@@ -11,9 +11,8 @@
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>◈</text></svg>">
 </head>
 <body>
-    <div class="glow-orb glow-1"></div>
-    <div class="glow-orb glow-2"></div>
-    <div class="glow-orb glow-3"></div>
+    <canvas id="particles"></canvas>
+    <div class="cursor-glow" id="cursor-glow"></div>
 
     <header class="header" id="header">
         <a href="#" class="logo">
@@ -22,7 +21,9 @@
         </a>
         <nav class="nav" id="nav">
             <a href="#services">Услуги</a>
-            <a href="#how">Как работаем</a>
+            <a href="#how">Процесс</a>
+            <a href="#roi">Калькулятор</a>
+            <a href="#faq">FAQ</a>
             <a href="#pricing">Тарифы</a>
             <a href="#contact" class="nav-cta">Обсудить проект</a>
         </nav>
@@ -35,12 +36,12 @@
         <div class="hero-badge" data-anim>Новый подход к AI</div>
         <h1 class="hero-title" data-anim>
             Внедряем<br>
-            <span class="gradient-text">искусственный интеллект</span><br>
+            <span class="gradient-text" id="typing-target"></span><span class="typing-cursor">|</span><br>
             за 2 недели
         </h1>
         <p class="hero-sub" data-anim>Аудит, прототип, интеграция, поддержка — полный цикл. Без воды, с конкретным результатом.</p>
         <div class="hero-actions" data-anim>
-            <a href="#contact" class="btn btn-primary">Начать проект</a>
+            <a href="#contact" class="btn btn-primary btn-glow">Начать проект</a>
             <a href="#how" class="btn btn-outline">Как это работает</a>
         </div>
         <div class="hero-stats" data-anim>
@@ -76,29 +77,33 @@
             <div class="section-label" data-anim>Услуги</div>
             <h2 class="section-title" data-anim>Что мы делаем<span class="title-dot">.</span></h2>
             <div class="cards-grid">
-                <div class="card" data-anim data-delay="0">
+                <div class="card card-tilt" data-anim data-delay="0" data-modal="audit">
                     <div class="card-icon">🔍</div>
                     <div class="card-number">01</div>
                     <h3 class="card-title">AI-аудит</h3>
                     <p class="card-desc">Находим точки роста, оцениваем ROI, строим дорожную карту. 2–5 дней.</p>
+                    <span class="card-link">Подробнее →</span>
                 </div>
-                <div class="card" data-anim data-delay="1">
+                <div class="card card-tilt" data-anim data-delay="1" data-modal="models">
                     <div class="card-icon">🧠</div>
                     <div class="card-number">02</div>
                     <h3 class="card-title">Кастомные модели</h3>
                     <p class="card-desc">Обучаем под ваши данные. Few-shot, дистилляция, точная настройка. 1–3 недели.</p>
+                    <span class="card-link">Подробнее →</span>
                 </div>
-                <div class="card" data-anim data-delay="2">
+                <div class="card card-tilt" data-anim data-delay="2" data-modal="api">
                     <div class="card-icon">⚡</div>
                     <div class="card-number">03</div>
                     <h3 class="card-title">Интеграция API</h3>
-                    <p class="card-desc">GPT, Claude, Gemini, локальные модели — подключаем безопасно и быстро. 1–2 недели.</p>
+                    <p class="card-desc">GPT, Claude, Gemini, локальные модели — подключаем безопасно и быстро.</p>
+                    <span class="card-link">Подробнее →</span>
                 </div>
-                <div class="card" data-anim data-delay="3">
+                <div class="card card-tilt" data-anim data-delay="3" data-modal="training">
                     <div class="card-icon">🎓</div>
                     <div class="card-number">04</div>
                     <h3 class="card-title">Обучение команды</h3>
-                    <p class="card-desc">Промпт-инжиниринг, работа с API, best practices. Воркшопы и менторство. 3–5 дней.</p>
+                    <p class="card-desc">Промпт-инжиниринг, работа с API, best practices. Воркшопы и менторство.</p>
+                    <span class="card-link">Подробнее →</span>
                 </div>
             </div>
         </div>
@@ -110,7 +115,7 @@
             <h2 class="section-title" data-anim>Как мы работаем<span class="title-dot">.</span></h2>
             <div class="timeline">
                 <div class="timeline-item" data-anim>
-                    <div class="timeline-marker">01</div>
+                    <div class="timeline-marker step-marker active">01</div>
                     <div class="timeline-content">
                         <h3>Аудит</h3>
                         <p>Изучаем процессы, считаем ROI, фиксируем метрики «до». Результат — дорожная карта.</p>
@@ -138,6 +143,17 @@
                     </div>
                 </div>
             </div>
+            <div class="progress-bar-container" data-anim>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progress-fill"></div>
+                </div>
+                <div class="progress-labels">
+                    <span>Аудит</span>
+                    <span>Прототип</span>
+                    <span>Внедрение</span>
+                    <span>Поддержка</span>
+                </div>
+            </div>
         </div>
     </section>
 
@@ -159,6 +175,53 @@
                 <div class="number-card" data-anim>
                     <div class="number-value"><span class="counter" data-target="3">0</span><span class="number-suffix">x ROI</span></div>
                     <div class="number-label">Средняя окупаемость</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="roi" id="roi">
+        <div class="container">
+            <div class="section-label" data-anim>Калькулятор</div>
+            <h2 class="section-title" data-anim>Оцените выгоду<span class="title-dot">.</span></h2>
+            <div class="roi-grid" data-anim>
+                <div class="roi-sliders">
+                    <div class="slider-group">
+                        <div class="slider-header">
+                            <label class="slider-label">Сотрудников в команде</label>
+                            <span class="slider-value" id="roi-employees-val">20</span>
+                        </div>
+                        <input type="range" id="roi-employees" class="slider" min="5" max="500" value="20" step="5">
+                    </div>
+                    <div class="slider-group">
+                        <div class="slider-header">
+                            <label class="slider-label">Часов рутины в неделю на человека</label>
+                            <span class="slider-value" id="roi-hours-val">10</span>
+                        </div>
+                        <input type="range" id="roi-hours" class="slider" min="2" max="40" value="10" step="1">
+                    </div>
+                    <div class="slider-group">
+                        <div class="slider-header">
+                            <label class="slider-label">Средняя стоимость часа (₽)</label>
+                            <span class="slider-value" id="roi-rate-val">1500</span>
+                        </div>
+                        <input type="range" id="roi-rate" class="slider" min="500" max="5000" value="1500" step="100">
+                    </div>
+                </div>
+                <div class="roi-results">
+                    <div class="roi-card">
+                        <div class="roi-card-label">Экономия часов/мес</div>
+                        <div class="roi-card-value" id="roi-hours-saved">320</div>
+                    </div>
+                    <div class="roi-card roi-card--highlight">
+                        <div class="roi-card-label">Экономия в месяц</div>
+                        <div class="roi-card-value" id="roi-money-saved">₽ 480 000</div>
+                    </div>
+                    <div class="roi-card">
+                        <div class="roi-card-label">Окупаемость AI</div>
+                        <div class="roi-card-value" id="roi-payback">~1 мес</div>
+                    </div>
+                    <a href="#contact" class="btn btn-primary btn-full" style="margin-top:8px">Получить точный расчёт →</a>
                 </div>
             </div>
         </div>
@@ -217,6 +280,69 @@
         </div>
     </section>
 
+    <section class="faq" id="faq">
+        <div class="container">
+            <div class="section-label" data-anim>FAQ</div>
+            <h2 class="section-title" data-anim>Частые вопросы<span class="title-dot">.</span></h2>
+            <div class="faq-list" data-anim>
+                <div class="faq-item">
+                    <button class="faq-question">
+                        Сколько времени занимает внедрение?
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Аудит — 2–5 дней, прототип — 3–5 дней, полное внедрение — 1–3 недели. Enterprise-проекты до 2 месяцев.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">
+                        Какие модели вы используете?
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>GPT-4, Claude, Gemini, Llama, Mistral и кастомные модели. Выбираем оптимальную под задачу, учитывая бюджет, безопасность и требования к качеству.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">
+                        Данные остаются в безопасности?
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Да. Поддерживаем on-premise развёртывание, шифрование данных, VPN-доступ. Работаем по NDA и соответствуем 152-ФЗ, GDPR.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">
+                        Что если AI не даст результата?
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Прототип за 3–5 дней покажет, стоит ли инвестировать. Если ROI не достигнут — возвращаем деньги за прототип. Риски минимальны.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">
+                        Нужна ли техническая команда на стороне клиента?
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Нет. Мыберём на себя всё: от анализа до поддержки. Но если есть техкоманда — вовлекаем её для масштабирования и обучения.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">
+                        Как считается стоимость?
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Фиксированная цена за тариф + оплата за токены/запросы. Прозрачно, без скрытых доплат. Используйте калькулятор выше для оценки ROI.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <section class="cta" id="contact">
         <div class="container">
             <div class="cta-content" data-anim>
@@ -228,7 +354,7 @@
                         <input type="email" class="form-input" placeholder="Email" required>
                     </div>
                     <textarea class="form-input form-textarea" placeholder="Опишите задачу или напишите «нужен AI-аудит»" rows="3" required></textarea>
-                    <button type="submit" class="btn btn-primary btn-full">Отправить заявку →</button>
+                    <button type="submit" class="btn btn-primary btn-full btn-glow">Отправить заявку →</button>
                 </form>
             </div>
         </div>
@@ -242,11 +368,21 @@
             <div class="footer-links">
                 <a href="#services">Услуги</a>
                 <a href="#how">Процесс</a>
+                <a href="#roi">Калькулятор</a>
                 <a href="#pricing">Тарифы</a>
+                <a href="#faq">FAQ</a>
             </div>
             <p class="footer-copy">© 2026 Это Тема</p>
         </div>
     </footer>
+
+    <div class="modal-overlay" id="modal-overlay">
+        <div class="modal" id="modal">
+            <button class="modal-close" id="modal-close">✕</button>
+            <h3 class="modal-title" id="modal-title"></h3>
+            <div class="modal-body" id="modal-body"></div>
+        </div>
+    </div>
 
     <script src="script.js"></script>
 </body>
