@@ -3,16 +3,28 @@
 
   var ANIM_THRESHOLD = 0.15;
 
-  var SYSTEM_PROMPT = 'Ты — AI-ассистент компании «Это Тема», эксперта по внедрению AI в бизнес. ' +
+  var SYSTEM_PROMPT = 'Ты — AI-ассистент компании «Это Тема», эксперт по внедрению AI в бизнес. ' +
     'Отвечай на русском языке. Давай конкретные, обдуманные, структурированные ответы. ' +
     'Если вопрос про бизнес-процессы — подробно объясни, как AI может помочь. ' +
     'Если вопрос общий — отвечай полно и по существу. ' +
     'Не используй шаблонные фразы и общие слова. Каждый ответ должен быть уникальным, полезным и практичным. ' +
-    'Используй Markdown-форматирование для структуры: заголовки (##), списки, **жирный**, `код`.';
+    'Используй Markdown-форматирование: заголовки (##), списки, **жирный**, `код`.';
 
   var PROVIDERS = {
+    pollinations: {
+      endpoint: 'https://text.pollinations.ai/openai/chat/completions',
+      needsKey: false,
+      models: [
+        { value: 'openai', label: 'GPT-4o Mini (бесплатно)' },
+        { value: 'mistral', label: 'Mistral (бесплатно)' },
+        { value: 'llama', label: 'Llama 3.3 (бесплатно)' },
+        { value: 'deepseek', label: 'DeepSeek (бесплатно)' },
+        { value: 'qwen', label: 'Qwen 2.5 (бесплатно)' }
+      ]
+    },
     openai: {
       endpoint: 'https://api.openai.com/v1/chat/completions',
+      needsKey: true,
       models: [
         { value: 'gpt-4o-mini', label: 'GPT-4o Mini' },
         { value: 'gpt-4o', label: 'GPT-4o' },
@@ -22,6 +34,7 @@
     },
     openrouter: {
       endpoint: 'https://openrouter.ai/api/v1/chat/completions',
+      needsKey: true,
       models: [
         { value: 'openai/gpt-4o-mini', label: 'GPT-4o Mini (via OR)' },
         { value: 'google/gemini-2.0-flash-001', label: 'Gemini 2.0 Flash' },
@@ -31,6 +44,7 @@
     },
     custom: {
       endpoint: '',
+      needsKey: true,
       models: [
         { value: 'default', label: 'Default model' }
       ]
@@ -113,19 +127,17 @@
 
     function loadSettings() {
       var key = localStorage.getItem(LS_KEY) || '';
-      var provider = localStorage.getItem(LS_PROVIDER) || 'openai';
-      var model = localStorage.getItem(LS_MODEL) || 'gpt-4o-mini';
+      var provider = localStorage.getItem(LS_PROVIDER) || 'pollinations';
+      var model = localStorage.getItem(LS_MODEL) || 'openai';
       var endpoint = localStorage.getItem(LS_ENDPOINT) || '';
 
       apiKeyInput.value = key;
       providerSelect.value = provider;
       endpointInput.value = endpoint;
       updateModelList(provider, model);
-      updateStatus(key);
-      syncModelDisplay(model);
-      if (provider === 'custom') {
-        endpointField.classList.remove('hidden');
-      }
+      updateStatus(provider, key);
+      syncModelDisplay(provider, model);
+      toggleApiField(provider);
     }
 
     function updateModelList(provider, selectedModel) {
@@ -140,7 +152,7 @@
       });
     }
 
-    function syncModelDisplay(model) {
+    function syncModelDisplay(provider, model) {
       modelDisplay.innerHTML = '';
       var allModels = [];
       Object.keys(PROVIDERS).forEach(function (p) {
@@ -154,20 +166,38 @@
         modelDisplay.appendChild(opt);
       });
 
-      var currentProvider = providerSelect.value;
-      var providerModels = PROVIDERS[currentProvider].models.map(function (m) { return m.value; });
+      var providerModels = PROVIDERS[provider].models.map(function (m) { return m.value; });
       if (providerModels.indexOf(model) === -1 && providerModels.length > 0) {
         model = providerModels[0];
       }
       modelDisplay.value = model;
     }
 
-    function updateStatus(key) {
-      if (key && key.length > 5) {
+    function toggleApiField(provider) {
+      var provConfig = PROVIDERS[provider];
+      var apiKeyRow = apiKeyInput.closest('.pg-field');
+      if (provConfig && !provConfig.needsKey) {
+        apiKeyRow.style.display = 'none';
+      } else {
+        apiKeyRow.style.display = '';
+      }
+      if (provider === 'custom') {
+        endpointField.classList.remove('hidden');
+      } else {
+        endpointField.classList.add('hidden');
+      }
+    }
+
+    function updateStatus(provider, key) {
+      var provConfig = PROVIDERS[provider];
+      if (provConfig && !provConfig.needsKey) {
+        statusEl.textContent = '✓ Бесплатный режим — работает без ключа';
+        statusEl.className = 'pg-api-status connected';
+      } else if (key && key.length > 5) {
         statusEl.textContent = '✓ API ключ задан (' + key.substring(0, 4) + '...' + key.substring(key.length - 4) + ')';
         statusEl.className = 'pg-api-status connected';
       } else {
-        statusEl.textContent = '⚠ API ключ не задан';
+        statusEl.textContent = '⚠ Для этого провайдера нужен API ключ';
         statusEl.className = 'pg-api-status disconnected';
       }
     }
@@ -177,8 +207,8 @@
       localStorage.setItem(LS_PROVIDER, providerSelect.value);
       localStorage.setItem(LS_MODEL, modelSelect.value);
       localStorage.setItem(LS_ENDPOINT, endpointInput.value.trim());
-      updateStatus(apiKeyInput.value.trim());
-      syncModelDisplay(modelSelect.value);
+      updateStatus(providerSelect.value, apiKeyInput.value.trim());
+      syncModelDisplay(providerSelect.value, modelSelect.value);
       settingsPanel.classList.add('hidden');
     }
 
@@ -191,12 +221,9 @@
     providerSelect.addEventListener('change', function () {
       var p = providerSelect.value;
       updateModelList(p, '');
-      syncModelDisplay(PROVIDERS[p].models[0].value);
-      if (p === 'custom') {
-        endpointField.classList.remove('hidden');
-      } else {
-        endpointField.classList.add('hidden');
-      }
+      syncModelDisplay(p, PROVIDERS[p].models[0].value);
+      updateStatus(p, apiKeyInput.value.trim());
+      toggleApiField(p);
     });
 
     modelDisplay.addEventListener('change', function () {
@@ -204,32 +231,37 @@
     });
 
     function getApiConfig() {
-      var provider = localStorage.getItem(LS_PROVIDER) || 'openai';
+      var provider = localStorage.getItem(LS_PROVIDER) || 'pollinations';
       var key = localStorage.getItem(LS_KEY) || '';
-      var model = modelDisplay.value || 'gpt-4o-mini';
+      var model = modelDisplay.value || 'openai';
       var endpoint = localStorage.getItem(LS_ENDPOINT) || '';
 
       if (provider === 'custom' && endpoint) {
-        return { endpoint: endpoint, key: key, model: model };
+        return { endpoint: endpoint, key: key, model: model, needsKey: true, isFree: false };
       }
 
-      var provConfig = PROVIDERS[provider];
-      if (!provConfig) provConfig = PROVIDERS.openai;
-
-      return { endpoint: provConfig.endpoint, key: key, model: model };
+      var provConfig = PROVIDERS[provider] || PROVIDERS.pollinations;
+      return {
+        endpoint: provConfig.endpoint,
+        key: key,
+        model: model,
+        needsKey: provConfig.needsKey,
+        isFree: !provConfig.needsKey
+      };
     }
 
     async function callAI(message) {
       var config = getApiConfig();
 
-      if (!config.key) {
-        throw new Error('API ключ не задан. Нажмите «Настроить API» и введите ключ.');
+      if (config.needsKey && !config.key) {
+        throw new Error('Для этого провайдера нужен API ключ. Нажмите «Настроить API» или переключитесь на бесплатный режим (Pollinations).');
       }
 
-      var headers = {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + config.key
-      };
+      var headers = { 'Content-Type': 'application/json' };
+
+      if (config.key) {
+        headers['Authorization'] = 'Bearer ' + config.key;
+      }
 
       if (config.endpoint.indexOf('openrouter') !== -1) {
         headers['HTTP-Referer'] = window.location.origin;
@@ -242,10 +274,13 @@
           { role: 'system', content: SYSTEM_PROMPT },
           { role: 'user', content: message }
         ],
-        stream: true,
         temperature: 0.7,
         max_tokens: 2048
       };
+
+      if (!config.isFree) {
+        body.stream = true;
+      }
 
       var startTime = Date.now();
       var response = await fetch(config.endpoint, {
@@ -262,12 +297,13 @@
         } catch (e) {
           errorText = response.status + ' ' + response.statusText;
         }
-        throw new Error('API ошибка: ' + errorText);
+        throw new Error('API ошибка (' + response.status + '): ' + errorText);
       }
 
       return {
-        stream: response.body,
-        startTime: startTime
+        response: response,
+        startTime: startTime,
+        isFree: config.isFree
       };
     }
 
@@ -284,7 +320,7 @@
       html = html.replace(/^- (.+)$/gm, '<li>$1</li>');
       html = html.replace(/^(\d+)\. (.+)$/gm, '<li>$2</li>');
 
-      html = html.replace(/(<li>.*<\/li>\n?)+/g, function (match) {
+      html = html.replace(/(<li>[\s\S]*?<\/li>\n?)+/g, function (match) {
         return '<ul>' + match + '</ul>';
       });
 
@@ -300,8 +336,8 @@
       return html;
     }
 
-    async function streamResponse(stream) {
-      var reader = stream.getReader();
+    async function streamResponse(response) {
+      var reader = response.body.getReader();
       var decoder = new TextDecoder();
       var fullText = '';
       var buffer = '';
@@ -328,12 +364,35 @@
               output.scrollTop = output.scrollHeight;
             }
           } catch (e) {
-            // skip malformed chunks
+            // skip
           }
         }
       }
 
       return fullText;
+    }
+
+    function typewriterText(text, startTime) {
+      return new Promise(function (resolve) {
+        var i = 0;
+        var speed = Math.max(8, Math.min(30, 3000 / text.length));
+
+        function type() {
+          if (i < text.length) {
+            var chunk = Math.min(3, text.length - i);
+            i += chunk;
+            output.innerHTML = renderMarkdown(text.substring(0, i));
+            output.scrollTop = output.scrollHeight;
+          }
+
+          if (i < text.length) {
+            setTimeout(type, speed);
+          } else {
+            resolve(text);
+          }
+        }
+        type();
+      });
     }
 
     runBtn.addEventListener('click', async function () {
@@ -358,15 +417,34 @@
         output.classList.remove('processing');
         output.innerHTML = '';
 
-        var fullText = await streamResponse(result.stream);
-        var elapsed = ((Date.now() - result.startTime) / 1000).toFixed(1);
+        var fullText;
+        var elapsed;
+
+        if (result.isFree) {
+          var data = await result.response.json();
+          fullText = data.choices && data.choices[0] && data.choices[0].message
+            ? data.choices[0].message.content
+            : JSON.stringify(data);
+          elapsed = ((Date.now() - result.startTime) / 1000).toFixed(1);
+          await typewriterText(fullText, result.startTime);
+        } else {
+          fullText = await streamResponse(result.response);
+          elapsed = ((Date.now() - result.startTime) / 1000).toFixed(1);
+        }
+
         var tokens = Math.ceil(fullText.length / 4);
-        meta.textContent = tokens + ' токенов · ' + elapsed + 'с · ' + (modelDisplay.value || 'unknown');
+        var modelLabel = modelDisplay.options[modelDisplay.selectedIndex]
+          ? modelDisplay.options[modelDisplay.selectedIndex].textContent
+          : modelDisplay.value;
+        meta.textContent = tokens + ' токенов · ' + elapsed + 'с · ' + modelLabel;
       } catch (err) {
         output.classList.remove('processing');
         output.innerHTML = '<div class="pg-result-line error">' + err.message + '</div>';
-        if (err.message.indexOf('API ключ') !== -1) {
-          output.innerHTML += '<div class="pg-result-line" style="margin-top:0.5rem;color:var(--text-secondary)">Нажмите «Настроить API» выше и введите ваш ключ.</div>';
+        if (err.message.indexOf('API ключ') !== -1 || err.message.indexOf('ключ') !== -1) {
+          output.innerHTML += '<div class="pg-result-line" style="margin-top:0.5rem;color:var(--text-secondary)">Переключитесь на «Pollinations (бесплатно)» или нажмите «Настроить API».</div>';
+        }
+        if (err.message.indexOf('Failed to fetch') !== -1 || err.message.indexOf('NetworkError') !== -1) {
+          output.innerHTML = '<div class="pg-result-line error">Не удалось подключиться к серверу. Попробуйте переключить провайдер или повторить позже.</div>';
         }
       }
 

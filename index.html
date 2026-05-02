@@ -165,7 +165,7 @@
                     <p class="section-subtitle">Введите любой запрос — AI даст обдуманный, конкретный ответ</p>
                 </div>
                 <div class="pg-api-bar" id="pg-api-bar">
-                    <span class="pg-api-status" id="pg-api-status">⚠ API ключ не задан</span>
+                    <span class="pg-api-status connected" id="pg-api-status">✓ Бесплатный режим — работает без ключа</span>
                     <button class="btn btn-ghost btn-sm" id="pg-settings-toggle">Настроить API</button>
                 </div>
                 <div class="pg-settings hidden" id="pg-settings">
@@ -173,6 +173,7 @@
                         <div class="pg-field">
                             <label class="pg-label">API провайдер</label>
                             <select id="pg-provider" class="pg-select pg-select-wide">
+                                <option value="pollinations" selected>Pollinations (бесплатно)</option>
                                 <option value="openai">OpenAI</option>
                                 <option value="openrouter">OpenRouter</option>
                                 <option value="custom">Custom endpoint</option>
@@ -181,14 +182,16 @@
                         <div class="pg-field">
                             <label class="pg-label">API ключ</label>
                             <input type="password" id="pg-apikey" class="pg-input-key" placeholder="sk-...">
-                            <span class="pg-hint">Ключ хранится только в вашем браузере (localStorage)</span>
+                            <span class="pg-hint">Не нужен для Pollinations. Хранится только в localStorage вашего браузера</span>
                         </div>
                         <div class="pg-field">
                             <label class="pg-label">Модель</label>
                             <select id="pg-model" class="pg-select pg-select-wide">
-                                <option value="gpt-4o-mini">GPT-4o Mini</option>
-                                <option value="gpt-4o">GPT-4o</option>
-                                <option value="gpt-4o-mini">GPT-4o Mini</option>
+                                <option value="openai">GPT-4o Mini (бесплатно)</option>
+                                <option value="mistral">Mistral (бесплатно)</option>
+                                <option value="llama">Llama 3.3 (бесплатно)</option>
+                                <option value="deepseek">DeepSeek (бесплатно)</option>
+                                <option value="qwen">Qwen 2.5 (бесплатно)</option>
                             </select>
                         </div>
                         <div class="pg-field hidden" id="pg-endpoint-field">
@@ -201,11 +204,14 @@
                 <div class="playground">
                     <div class="playground-input">
                         <label for="pg-input" class="pg-label">Запрос</label>
-                        <textarea id="pg-input" class="pg-textarea" placeholder="Задайте любой вопрос...&#10;&#10;Например: Как AI может ускорить обработку заявок в банке на 40%?" rows=5></textarea>
+                        <textarea id="pg-input" class="pg-textarea" placeholder="Задайте любой вопрос...&#10;&#10;Например: Как AI может ускорить обработку заявок в банке на 40%?&#10;Ctrl+Enter для отправки" rows=5></textarea>
                         <div class="pg-controls">
                             <select id="pg-model-display" class="pg-select">
-                                <option value="gpt-4o-mini">GPT-4o Mini</option>
-                                <option value="gpt-4o">GPT-4o</option>
+                                <option value="openai">GPT-4o Mini (бесплатно)</option>
+                                <option value="mistral">Mistral (бесплатно)</option>
+                                <option value="llama">Llama 3.3 (бесплатно)</option>
+                                <option value="deepseek">DeepSeek (бесплатно)</option>
+                                <option value="qwen">Qwen 2.5 (бесплатно)</option>
                             </select>
                             <button class="btn btn-primary btn-sm" id="pg-run">Отправить</button>
                         </div>
@@ -216,7 +222,7 @@
                             <span class="pg-meta" id="pg-meta"></span>
                         </div>
                         <div class="pg-output-body" id="pg-output">
-                            <span class="pg-placeholder">Настройте API ключ и задайте вопрос...</span>
+                            <span class="pg-placeholder">Задайте вопрос — AI ответит прямо здесь...</span>
                         </div>
                     </div>
                 </div>
