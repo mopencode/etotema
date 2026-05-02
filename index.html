@@ -425,12 +425,16 @@
             <div class="cta-content" data-anim>
                 <h2 class="cta-title">Готовы внедрить AI<span class="title-dot">.</span></h2>
                 <p class="cta-desc">Расскажите о задаче — ответим за 4 часа с предварительной оценкой</p>
-                <form class="cta-form" id="contact-form">
+                <form class="cta-form" id="contact-form" action="https://formsubmit.co/dimabubin4@gmail.com" method="POST">
+                    <input type="hidden" name="_subject" value="Новая заявка с etotema.ru">
+                    <input type="hidden" name="_captcha" value="false">
+                    <input type="hidden" name="_template" value="table">
+                    <input type="hidden" name="_next" value="https://etotema.ru/">
                     <div class="form-row">
-                        <input type="text" class="form-input" placeholder="Имя" required>
-                        <input type="email" class="form-input" placeholder="Email" required>
+                        <input type="text" name="name" class="form-input" placeholder="Имя" required>
+                        <input type="email" name="email" class="form-input" placeholder="Email" required>
                     </div>
-                    <textarea class="form-input form-textarea" placeholder="Опишите задачу или напишите «нужен AI-аудит»" rows="3" required></textarea>
+                    <textarea name="message" class="form-input form-textarea" placeholder="Опишите задачу или напишите «нужен AI-аудит»" rows="3" required></textarea>
                     <button type="submit" class="btn btn-primary btn-full btn-glow magnetic" id="submit-btn">Отправить заявку →</button>
                 </form>
             </div>

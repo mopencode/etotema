@@ -448,20 +448,11 @@
     var form = document.getElementById('contact-form');
     if (!form) return;
     form.addEventListener('submit', function (e) {
-      e.preventDefault();
       var btn = document.getElementById('submit-btn');
-      var originalText = btn.textContent;
-      btn.textContent = '\u2713 \u041E\u0442\u043F\u0440\u0430\u0432\u043B\u0435\u043D\u043E!';
-      btn.style.background = '#10b981';
+      btn.textContent = 'Отправка...';
       btn.disabled = true;
       fireConfetti();
       showToast('Заявка отправлена! Мы свяжемся с вами в течение 4 часов.');
-      setTimeout(function () {
-        btn.textContent = originalText;
-        btn.style.background = '';
-        btn.disabled = false;
-        form.reset();
-      }, 3000);
     });
   }
 
