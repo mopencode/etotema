@@ -3,93 +3,363 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Это Тема | AI-разработка</title>
+    <title>Это Тема — Внедрение AI в бизнес за 2 недели</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800;900&family=IBM+Plex+Mono:wght@300;400;500;600&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>◈</text></svg>">
 </head>
 <body>
-    <div class="scanlines"></div>
-    <div class="bg-pattern"></div>
-
     <header class="header">
-        <div class="logo">
-            <span class="logo-icon">◈</span>
+        <a href="#" class="logo">
+            <span class="logo-mark">◈</span>
             <span class="logo-text">Это Тема</span>
-        </div>
-        <nav class="nav">
-            <a href="#about">О нас</a>
-            <a href="#cats">Котики</a>
+        </a>
+        <nav class="nav" id="nav">
             <a href="#services">Услуги</a>
-            <a href="#contact">Контакты</a>
+            <a href="#process">Процесс</a>
+            <a href="#playground"> Playground</a>
+            <a href="#calculator">Калькулятор</a>
+            <a href="#pricing">Тарифы</a>
         </nav>
+        <button class="nav-toggle" id="nav-toggle" aria-label="Меню">
+            <span></span><span></span><span></span>
+        </button>
     </header>
 
-    <main class="hero">
-        <div class="hero-content">
-            <div class="badge">AI-разработка нового поколения</div>
-            <h1 class="title">
-                <span class="title-line">Будущее</span>
-                <span class="title-line accent">создаётся</span>
-                <span class="title-line">здесь</span>
-            </h1>
-            <p class="subtitle">
-                Мы превращаем сложные идеи в элегантные ИИ-решения. 
-                Каждый проект — это новая глава в истории технологий.
-            </p>
-            <div class="cta-group">
-                <a href="#contact" class="btn btn-primary">Обсудить проект</a>
-                <a href="#about" class="btn btn-secondary">Узнать больше</a>
+    <main>
+        <section class="hero" id="hero">
+            <div class="hero-bg" id="hero-bg"></div>
+            <div class="container hero-grid">
+                <div class="hero-content">
+                    <div class="hero-badge">AI-интеграция для бизнеса</div>
+                    <h1 class="hero-title">
+                        Внедряем AI.<br>
+                        <span class="accent">Результат</span> —<br>
+                        через 2 недели.
+                    </h1>
+                    <p class="hero-subtitle">Оцениваем процессы, проектируем решение, интегрируем в вашу инфраструктуру. Без воды — только работающие AI-системы.</p>
+                    <div class="hero-actions">
+                        <a href="#contact" class="btn btn-primary">Обсудить проект</a>
+                        <a href="#playground" class="btn btn-ghost">Попробовать демо</a>
+                    </div>
+                    <div class="hero-metrics">
+                        <div class="metric">
+                            <span class="metric-value" data-target="200">0</span><span class="metric-suffix">+</span>
+                            <span class="metric-label">проектов</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-value" data-target="50">0</span><span class="metric-suffix">+</span>
+                            <span class="metric-label">клиентов</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-value" data-target="99" data-suffix=".9%">0</span><span class="metric-suffix">%</span>
+                            <span class="metric-label">аптайм</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="hero-visual">
+                    <div class="terminal">
+                        <div class="terminal-header">
+                            <span class="terminal-dot"></span>
+                            <span class="terminal-dot"></span>
+                            <span class="terminal-dot"></span>
+                            <span class="terminal-title">etotema-ai — bash</span>
+                        </div>
+                        <div class="terminal-body">
+                            <div class="terminal-line"><span class="prompt">$</span> etotema deploy --model gpt-4 --region eu</div>
+                            <div class="terminal-line output">✓ Model loaded (gpt-4-turbo)</div>
+                            <div class="terminal-line output">✓ Endpoint: api.etotema.ru/v1</div>
+                            <div class="terminal-line output">✓ Latency: 120ms avg</div>
+                            <div class="terminal-line output">✓ Uptime SLA: 99.9%</div>
+                            <div class="terminal-line output success">Deployed successfully.</div>
+                            <div class="terminal-line"><span class="prompt">$</span> <span class="cursor">█</span></div>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div>
+        </section>
 
-        <div class="hero-visual">
-            <div class="orb orb-1"></div>
-            <div class="orb orb-2"></div>
-            <div class="orb orb-3"></div>
-            <div class="code-block">
-                <div class="code-line"><span class="keyword">def</span> <span class="func">create_future</span>():</div>
-                <div class="code-line indent">    <span class="comment"># Будущее, которое мы создаём</span></div>
-                <div class="code-line indent">    <span class="keyword">return</span> <span class="string">"Это Тема"</span></div>
-                <div class="code-line indent">
-    <span class="func">generate_ai</span>(<span class="param">ideas</span>=<span class="string">"бесконечность"</span>)</div>
-                <div class="cursor">|</div>
+        <section class="services" id="services">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-tag">Услуги</span>
+                    <h2 class="section-title">Что мы делаем</h2>
+                    <p class="section-subtitle">Четыре направления, которые покрывают полный цикл AI-трансформации</p>
+                </div>
+                <div class="services-grid">
+                    <div class="service-card" data-anim>
+                        <div class="service-icon">🔍</div>
+                        <h3 class="service-title">AI-аудит</h3>
+                        <p class="service-desc">Анализируем бизнес-процессы, находим точки применения AI, оцениваем ROI. Результат — дорожная карта с конкретными решениями.</p>
+                        <span class="service-tag">2–5 дней</span>
+                    </div>
+                    <div class="service-card" data-anim>
+                        <div class="service-icon">🧠</div>
+                        <h3 class="service-title">Кастомные модели</h3>
+                        <p class="service-desc">Разрабатываем и обучаем модели под ваши данные и задачи. Точная настройка, few-shot обучение, дистилляция.</p>
+                        <span class="service-tag">1–3 недели</span>
+                    </div>
+                    <div class="service-card" data-anim>
+                        <div class="service-icon">⚡</div>
+                        <h3 class="service-title">Интеграция API</h3>
+                        <p class="service-desc">Подключаем GPT, Claude, Gemini, локальные модели к вашим системам. Безопасно, масштабируемо, с мониторингом.</p>
+                        <span class="service-tag">1–2 недели</span>
+                    </div>
+                    <div class="service-card" data-anim>
+                        <div class="service-icon">🎓</div>
+                        <h3 class="service-title">Обучение команды</h3>
+                        <p class="service-desc">Воркшопы и менторство для вашей команды. Промпт-инжиниринг, работа с API, Best Practices AI-разработки.</p>
+                        <span class="service-tag">3–5 дней</span>
+                    </div>
+                </div>
             </div>
-        </div>
+        </section>
+
+        <section class="process" id="process">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-tag">Процесс</span>
+                    <h2 class="section-title">Как мы работаем</h2>
+                    <p class="section-subtitle">Четыре шага от идеи до работающего решения</p>
+                </div>
+                <div class="process-timeline">
+                    <div class="process-step" data-anim>
+                        <div class="step-number">01</div>
+                        <div class="step-content">
+                            <h3>Аудит</h3>
+                            <p>Изучаем процессы, определяем точки роста, считаем потенциальный эффект. Фиксируем метрики «до».</p>
+                        </div>
+                    </div>
+                    <div class="process-step" data-anim>
+                        <div class="step-number">02</div>
+                        <div class="step-content">
+                            <h3>Прототип</h3>
+                            <p>За 3–5 дней делаем работающий MVP. Вы видите результат и принимаете решение о внедрении на основе данных.</p>
+                        </div>
+                    </div>
+                    <div class="process-step" data-anim>
+                        <div class="step-number">03</div>
+                        <div class="step-content">
+                            <h3>Внедрение</h3>
+                            <p>Интегрируем решение в вашу инфраструктуру. Настройка, тестирование, нагрузочные испытания, документация.</p>
+                        </div>
+                    </div>
+                    <div class="process-step" data-anim>
+                        <div class="step-number">04</div>
+                        <div class="step-content">
+                            <h3>Поддержка</h3>
+                            <p>Мониторинг, обновление моделей, масштабирование. SLA 99.9% — вы всегда можете на нас положиться.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="playground-section" id="playground">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-tag">Попробовать</span>
+                    <h2 class="section-title">AI Playground</h2>
+                    <p class="section-subtitle">Введите текст — увидите, как работает наша обработка</p>
+                </div>
+                <div class="playground">
+                    <div class="playground-input">
+                        <label for="pg-input" class="pg-label">Входной текст</label>
+                        <textarea id="pg-input" class="pg-textarea" placeholder="Например: Подготовь отчёт по продажам за Q1 и выдели 3 основных тренда..." rows=4></textarea>
+                        <div class="pg-controls">
+                            <select id="pg-model" class="pg-select">
+                                <option value="etotema-4">Это Тема-4</option>
+                                <option value="etotema-mini">Это Тема Mini</option>
+                                <option value="etotema-vision">Это Тема Vision</option>
+                            </select>
+                            <button class="btn btn-primary btn-sm" id="pg-run">Запустить</button>
+                        </div>
+                    </div>
+                    <div class="playground-output">
+                        <div class="pg-output-header">
+                            <span class="pg-label">Результат</span>
+                            <span class="pg-meta" id="pg-meta"></span>
+                        </div>
+                        <div class="pg-output-body" id="pg-output">
+                            <span class="pg-placeholder">Результат появится здесь...</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="calculator-section" id="calculator">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-tag">Стоимость</span>
+                    <h2 class="section-title">Калькулятор проекта</h2>
+                    <p class="section-subtitle">Настройте параметры — оцените бюджет за 30 секунд</p>
+                </div>
+                <div class="calculator">
+                    <div class="calc-sliders">
+                        <div class="calc-field">
+                            <div class="calc-field-header">
+                                <label for="calc-type" class="calc-label">Тип проекта</label>
+                            </div>
+                            <div class="calc-options" id="calc-type">
+                                <button class="calc-option active" data-value="audit">AI-аудит</button>
+                                <button class="calc-option" data-value="custom">Кастомная модель</button>
+                                <button class="calc-option" data-value="api">Интеграция API</button>
+                                <button class="calc-option" data-value="training">Обучение</button>
+                            </div>
+                        </div>
+                        <div class="calc-field">
+                            <div class="calc-field-header">
+                                <label for="calc-complexity" class="calc-label">Сложность</label>
+                                <span class="calc-value" id="complexity-value">Средняя</span>
+                            </div>
+                            <input type="range" id="calc-complexity" class="calc-range" min="1" max="5" value="3">
+                            <div class="calc-range-labels">
+                                <span>Простая</span><span>Средняя</span><span>Сложная</span>
+                            </div>
+                        </div>
+                        <div class="calc-field">
+                            <div class="calc-field-header">
+                                <label for="calc-timeline" class="calc-label">Сроки (недель)</label>
+                                <span class="calc-value" id="timeline-value">2</span>
+                            </div>
+                            <input type="range" id="calc-timeline" class="calc-range" min="1" max="8" value="2">
+                            <div class="calc-range-labels">
+                                <span>1</span><span>4</span><span>8</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="calc-result">
+                        <div class="calc-result-label">Ориентировочная стоимость</div>
+                        <div class="calc-result-price" id="calc-price">₽ 800 000</div>
+                        <div class="calc-result-note">*Точная стоимость после бесплатного аудита</div>
+                        <a href="#contact" class="btn btn-primary" style="width:100%;margin-top:1.5rem;">Получить точную оценку</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="pricing-section" id="pricing">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-tag">Тарифы</span>
+                    <h2 class="section-title">Прозрачные тарифы</h2>
+                    <p class="section-subtitle">Выберите план, который подходит вашему бизнесу</p>
+                </div>
+                <div class="pricing-toggle">
+                    <span class="pricing-period active" data-period="monthly">Ежемесячно</span>
+                    <span class="pricing-period" data-period="yearly">Ежегодно <span class="pricing-badge">-20%</span></span>
+                </div>
+                <div class="pricing-grid">
+                    <div class="pricing-card" data-anim>
+                        <div class="pricing-name">Starter</div>
+                        <div class="pricing-desc">Для первого знакомства с AI</div>
+                        <div class="pricing-amount" data-monthly="150000" data-yearly="120000">₽ 150 000<span class="pricing-period-label">/мес</span></div>
+                        <ul class="pricing-features">
+                            <li>✓ AI-аудит одного процесса</li>
+                            <li>✓ 1 прототип за 5 дней</li>
+                            <li>✓ Поддержка 8×5</li>
+                            <li>✓ До 10K запросов/мес</li>
+                            <li class="disabled">✗ Кастомные модели</li>
+                            <li class="disabled">✗ Выделенная инфраструктура</li>
+                        </ul>
+                        <a href="#contact" class="btn btn-ghost" style="width:100%">Начать</a>
+                    </div>
+                    <div class="pricing-card pricing-card--featured" data-anim>
+                        <div class="pricing-badge-popular">Популярный</div>
+                        <div class="pricing-name">Business</div>
+                        <div class="pricing-desc">Полная AI-интеграция</div>
+                        <div class="pricing-amount" data-monthly="450000" data-yearly="360000">₽ 450 000<span class="pricing-period-label">/мес</span></div>
+                        <ul class="pricing-features">
+                            <li>✓ AI-аудит всех процессов</li>
+                            <li>✓ 3 прототипа за 2 недели</li>
+                            <li>✓ Поддержка 24/7</li>
+                            <li>✓ До 100K запросов/мес</li>
+                            <li>✓ Кастомные модели</li>
+                            <li class="disabled">✗ Выделенная инфраструктура</li>
+                        </ul>
+                        <a href="#contact" class="btn btn-primary" style="width:100%">Начать</a>
+                    </div>
+                    <div class="pricing-card" data-anim>
+                        <div class="pricing-name">Enterprise</div>
+                        <div class="pricing-desc">Индивидуальные решения</div>
+                        <div class="pricing-amount" data-monthly="0" data-yearly="0">По запросу</div>
+                        <ul class="pricing-features">
+                            <li>✓ Неограниченный AI-аудит</li>
+                            <li>✓ Персональный менеджер</li>
+                            <li>✓ SLA 99.9%</li>
+                            <li>✓ Неограниченные запросы</li>
+                            <li>✓ Кастомные модели</li>
+                            <li>✓ Выделенная инфраструктура</li>
+                        </ul>
+                        <a href="#contact" class="btn btn-ghost" style="width:100%">Связаться</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="stats-section" id="stats">
+            <div class="container">
+                <div class="stats-grid">
+                    <div class="stat-card" data-anim>
+                        <div class="stat-number"><span class="stat-value" data-target="200">0</span><span class="stat-suffix">+</span></div>
+                        <div class="stat-label">Проектов реализовано</div>
+                    </div>
+                    <div class="stat-card" data-anim>
+                        <div class="stat-number"><span class="stat-value" data-target="50">0</span><span class="stat-suffix">+</span></div>
+                        <div class="stat-label">Активных клиентов</div>
+                    </div>
+                    <div class="stat-card" data-anim>
+                        <div class="stat-number"><span class="stat-value" data-target="12">0</span></div>
+                        <div class="stat-label">Отраслей</div>
+                    </div>
+                    <div class="stat-card" data-anim>
+                        <div class="stat-number"><span class="stat-value" data-target="99">0</span><span class="stat-suffix">.9%</span></div>
+                        <div class="stat-label">Аптайм SLA</div>
+                    </div>
+                    <div class="stat-card" data-anim>
+                        <div class="stat-number"><span class="stat-value" data-target="14">0</span><span class="stat-suffix">дней</span></div>
+                        <div class="stat-label">Среднее время внедрения</div>
+                    </div>
+                    <div class="stat-card" data-anim>
+                        <div class="stat-number"><span class="stat-value" data-target="3">0</span><span class="stat-suffix">х</span></div>
+                        <div class="stat-label">Средний ROI</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="contact-section" id="contact">
+            <div class="container">
+                <div class="contact-card">
+                    <h2 class="contact-title">Готовы внедрить AI?</h2>
+                    <p class="contact-desc">Расскажите о задаче — ответим в течение 4 часов с предварительной оценкой</p>
+                    <form class="contact-form" id="contact-form">
+                        <input type="text" class="form-input" placeholder="Ваше имя" required>
+                        <input type="email" class="form-input" placeholder="Email" required>
+                        <textarea class="form-input form-textarea" placeholder="Опишите задачу или просто напишите «нужен AI-аудит»" rows=3></textarea>
+                        <button type="submit" class="btn btn-primary btn-block">Отправить заявку</button>
+                    </form>
+                    <div class="contact-alt">или напишите <a href="mailto:hello@etotema.ru" class="contact-email">hello@etotema.ru</a></div>
+                </div>
+            </div>
+        </section>
     </main>
 
-    <section class="cats-section" id="cats">
-        <div class="section-divider">
-            <span class="divider-gem"></span>
-        </div>
-        <div class="cats-header">
-            <h2>Котики для хорошего настроения</h2>
-            <p>Каждые 5 секунд наши котики обновляют свой облик. Нажми на карточку для мгновенного обновления!</p>
-        </div>
-        <div class="cats-gallery" id="cats-gallery"></div>
-        <p class="refresh-hint">Автообновление каждые 5 сек · Нажми на карточку для реролла</p>
-    </section>
-
-    <section class="contact" id="contact">
-        <div class="contact-content">
-            <div class="section-divider">
-                <span class="divider-gem"></span>
-            </div>
-            <h2>Готовы начать?</h2>
-            <p>Расскажите нам о своей идее — и мы поможем воплотить её в жизнь</p>
-            <a href="mailto:hello@etotema.ru" class="email-link">hello@etotema.ru</a>
-        </div>
-    </section>
-
     <footer class="footer">
-        <div class="footer-content">
-            <div class="footer-logo">
-                <span class="logo-icon">◈</span>
-                <span>Это Тема</span>
+        <div class="container footer-grid">
+            <div class="footer-brand">
+                <span class="logo-mark">◈</span>
+                <span class="logo-text">Это Тема</span>
             </div>
-            <p class="copyright">&copy; 2026 Это Тема. Все права защищены.</p>
-            <p class="tagline">Искусственный интеллект. Человечность.</p>
+            <div class="footer-links">
+                <a href="#services">Услуги</a>
+                <a href="#process">Процесс</a>
+                <a href="#pricing">Тарифы</a>
+            </div>
+            <div class="footer-copy">© 2026 Это Тема. Все права защищены.</div>
         </div>
     </footer>
 
