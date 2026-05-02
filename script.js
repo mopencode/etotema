@@ -452,9 +452,10 @@
       var btn = document.getElementById('submit-btn');
       var originalText = btn.textContent;
       btn.textContent = '\u2713 \u041E\u0442\u043F\u0440\u0430\u0432\u043B\u0435\u043D\u043E!';
-      btn.style.background = 'var(--accent-2)';
+      btn.style.background = '#10b981';
       btn.disabled = true;
       fireConfetti();
+      showToast('Заявка отправлена! Мы свяжемся с вами в течение 4 часов.');
       setTimeout(function () {
         btn.textContent = originalText;
         btn.style.background = '';
@@ -472,7 +473,7 @@
     canvas.height = window.innerHeight;
 
     var pieces = [];
-    var colors = ['#6c5ce7', '#00cec9', '#fd79a8', '#ffeaa7', '#a29bfe', '#55efc4'];
+    var colors = ['#6366f1', '#818cf8', '#f59e0b', '#fbbf24', '#a78bfa', '#34d399'];
     var confettiCount = 150;
 
     for (var i = 0; i < confettiCount; i++) {
@@ -588,12 +589,47 @@
     var tags = document.querySelectorAll('[data-tag-hover]');
     tags.forEach(function (tag) {
       tag.addEventListener('mouseenter', function () {
-        tag.style.transform = 'translateY(-2px) scale(1.08)';
+        tag.style.transform = 'translateY(-2px) scale(1.05)';
       });
       tag.addEventListener('mouseleave', function () {
         tag.style.transform = '';
       });
     });
+  }
+
+  function initRipple() {
+    var btns = document.querySelectorAll('.btn');
+    btns.forEach(function (btn) {
+      btn.addEventListener('click', function (e) {
+        var rect = btn.getBoundingClientRect();
+        var ripple = document.createElement('span');
+        ripple.className = 'ripple';
+        var size = Math.max(rect.width, rect.height);
+        ripple.style.width = ripple.style.height = size + 'px';
+        ripple.style.left = (e.clientX - rect.left - size / 2) + 'px';
+        ripple.style.top = (e.clientY - rect.top - size / 2) + 'px';
+        btn.appendChild(ripple);
+        setTimeout(function () { ripple.remove(); }, 600);
+      });
+    });
+  }
+
+  function showToast(message) {
+    var existing = document.querySelector('.toast');
+    if (existing) existing.remove();
+    var toast = document.createElement('div');
+    toast.className = 'toast';
+    toast.textContent = message;
+    document.body.appendChild(toast);
+    requestAnimationFrame(function () {
+      requestAnimationFrame(function () {
+        toast.classList.add('show');
+      });
+    });
+    setTimeout(function () {
+      toast.classList.remove('show');
+      setTimeout(function () { toast.remove(); }, 400);
+    }, 3500);
   }
 
   initParticles();
@@ -617,4 +653,5 @@
   initHeaderScroll();
   initSmoothScroll();
   initTagHover();
+  initRipple();
 })();
