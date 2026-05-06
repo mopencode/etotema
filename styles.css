@@ -471,9 +471,7 @@ body.light-theme .card-number { color: rgba(0,0,30,0.04); }
 .case-stat-val { font-family: var(--mono); font-size: 1.2rem; font-weight: 800; color: var(--warm); }
 .case-stat-label { font-size: 0.7rem; color: var(--text-tertiary); text-transform: uppercase; letter-spacing: 0.06em; }
 
-.cases-arrows { display: flex; align-items: center; justify-content: center; gap: 16px; margin-top: 16px; }
-.case-arrow { width: 42px; height: 42px; border-radius: 10px; border: 1px solid var(--border); background: var(--surface-solid); color: var(--text); font-size: 1rem; cursor: pointer; transition: var(--transition); display: flex; align-items: center; justify-content: center; }
-.case-arrow:hover { border-color: var(--accent); color: var(--accent-light); }
+.cases-dots { display: flex; gap: 8px; justify-content: center; margin-top: 20px; }
 .cases-dots { display: flex; gap: 8px; }
 .cases-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--border-hover); transition: var(--transition); cursor: pointer; }
 .cases-dot.active { background: var(--accent); width: 24px; border-radius: 4px; }

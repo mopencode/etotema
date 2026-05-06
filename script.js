@@ -364,8 +364,6 @@ function initCardTilt() {
   function initCasesCarousel() {
     var slides = document.querySelectorAll('.cases-slide');
     var dotsContainer = document.getElementById('cases-dots');
-    var leftBtn = document.getElementById('case-left');
-    var rightBtn = document.getElementById('case-right');
     if (!slides.length || !dotsContainer) return;
 
     var current = 0;
@@ -417,9 +415,6 @@ function initCardTilt() {
       clearInterval(autoTimer);
       autoTimer = setInterval(function () { goTo(current + 1); }, 5000);
     }
-
-    leftBtn.addEventListener('click', function () { goTo(current - 1); });
-    rightBtn.addEventListener('click', function () { goTo(current + 1); });
 
     buildDots();
     resetAuto();
