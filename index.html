@@ -231,42 +231,84 @@
         <div class="container">
             <div class="section-label" data-anim>Кейсы</div>
             <h2 class="section-title" data-anim>Результаты, которые говорят сами за себя<span class="title-dot">.</span></h2>
-            <div class="cases-track" id="cases-track">
-                <div class="case-card" data-anim>
-                    <div class="case-tag">Финтех</div>
-                    <h3 class="case-title">Автокредитный скоринг для банка</h3>
-                    <p class="case-desc">GPT-модель анализирует заявки за 2 секунды вместо 15 минут ручной проверки.</p>
-                    <div class="case-stats">
-                        <div class="case-stat"><span class="case-stat-val">92%</span><span class="case-stat-label">Точность</span></div>
-                        <div class="case-stat"><span class="case-stat-val">-70%</span><span class="case-stat-label">Время</span></div>
-                        <div class="case-stat"><span class="case-stat-val">3.2x</span><span class="case-stat-label">ROI</span></div>
+            <div class="cases-wrapper">
+                <div class="cases-slide active" id="case-0">
+                    <div class="case-card-wide">
+                        <div class="case-tag">Финтех</div>
+                        <h3 class="case-title">Автокредитный скоринг для банка</h3>
+                        <p class="case-desc">GPT-модель анализирует заявки за 2 секунды вместо 15 минут ручной проверки. Снижение дефолтов на 18%.</p>
+                        <div class="case-stats">
+                            <div class="case-stat"><span class="case-stat-val">92%</span><span class="case-stat-label">Точность</span></div>
+                            <div class="case-stat"><span class="case-stat-val">-70%</span><span class="case-stat-label">Время</span></div>
+                            <div class="case-stat"><span class="case-stat-val">3.2x</span><span class="case-stat-label">ROI</span></div>
+                        </div>
                     </div>
                 </div>
-                <div class="case-card" data-anim data-delay="1">
-                    <div class="case-tag">E-commerce</div>
-                    <h3 class="case-title">Персонализация рекомендаций</h3>
-                    <p class="case-desc">RAG-система на основе истории покупок повышает конверсию и средний чек.</p>
-                    <div class="case-stats">
-                        <div class="case-stat"><span class="case-stat-val">+45%</span><span class="case-stat-label">Конверсия</span></div>
-                        <div class="case-stat"><span class="case-stat-val">+28%</span><span class="case-stat-label">Средний чек</span></div>
-                        <div class="case-stat"><span class="case-stat-val">5x</span><span class="case-stat-label">ROI</span></div>
+                <div class="cases-slide" id="case-1">
+                    <div class="case-card-wide">
+                        <div class="case-tag">E-commerce</div>
+                        <h3 class="case-title">Персонализация рекомендаций</h3>
+                        <p class="case-desc">RAG-система на основе истории покупок повышает конверсию и средний чек. Внедрена за 2 недели.</p>
+                        <div class="case-stats">
+                            <div class="case-stat"><span class="case-stat-val">+45%</span><span class="case-stat-label">Конверсия</span></div>
+                            <div class="case-stat"><span class="case-stat-val">+28%</span><span class="case-stat-label">Средний чек</span></div>
+                            <div class="case-stat"><span class="case-stat-val">5x</span><span class="case-stat-label">ROI</span></div>
+                        </div>
                     </div>
                 </div>
-                <div class="case-card" data-anim data-delay="2">
-                    <div class="case-tag">HR-tech</div>
-                    <h3 class="case-title">AI-ассистент для рекрутинга</h3>
-                    <p class="case-desc">Автоматический скрининг резюме и первичное общение с кандидатами 24/7.</p>
-                    <div class="case-stats">
-                        <div class="case-stat"><span class="case-stat-val">-80%</span><span class="case-stat-label">Время найма</span></div>
-                        <div class="case-stat"><span class="case-stat-val">4.1x</span><span class="case-stat-label">ROI</span></div>
-                        <div class="case-stat"><span class="case-stat-val">1000+</span><span class="case-stat-label">Резюме/день</span></div>
+                <div class="cases-slide" id="case-2">
+                    <div class="case-card-wide">
+                        <div class="case-tag">HR-tech</div>
+                        <h3 class="case-title">AI-ассистент для рекрутинга</h3>
+                        <p class="case-desc">Автоматический скрининг резюме и первичное общение с кандидатами 24/7. 1000+ резюме в день.</p>
+                        <div class="case-stats">
+                            <div class="case-stat"><span class="case-stat-val">-80%</span><span class="case-stat-label">Время найма</span></div>
+                            <div class="case-stat"><span class="case-stat-val">4.1x</span><span class="case-stat-label">ROI</span></div>
+                            <div class="case-stat"><span class="case-stat-val">1000+</span><span class="case-stat-label">Резюме/день</span></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="cases-slide" id="case-3">
+                    <div class="case-card-wide">
+                        <div class="case-tag">Логистика</div>
+                        <h3 class="case-title">Оптимизация маршрутов доставки</h3>
+                        <p class="case-desc">Предиктивная модель снижает затраты на топливо и сокращает время доставки на 35%.</p>
+                        <div class="case-stats">
+                            <div class="case-stat"><span class="case-stat-val">-35%</span><span class="case-stat-label">Расходы</span></div>
+                            <div class="case-stat"><span class="case-stat-val">+22%</span><span class="case-stat-label">Скорость</span></div>
+                            <div class="case-stat"><span class="case-stat-val">4.8x</span><span class="case-stat-label">ROI</span></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="cases-slide" id="case-4">
+                    <div class="case-card-wide">
+                        <div class="case-tag">Маркетинг</div>
+                        <h3 class="case-title">AI-генерация контента</h3>
+                        <p class="case-desc">Автоматическое создание SEO-статей, соцпостов и email-рассылок. Качество на уровне редакции.</p>
+                        <div class="case-stats">
+                            <div class="case-stat"><span class="case-stat-val">10x</span><span class="case-stat-label">Скорость</span></div>
+                            <div class="case-stat"><span class="case-stat-val">-60%</span><span class="case-stat-label">Бюджет</span></div>
+                            <div class="case-stat"><span class="case-stat-val">6.3x</span><span class="case-stat-label">ROI</span></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="cases-slide" id="case-5">
+                    <div class="case-card-wide">
+                        <div class="case-tag">Медицина</div>
+                        <h3 class="case-title">AI-диагностика рентгенов</h3>
+                        <p class="case-desc">Компьютерное зрение выявляет патологии с точностью 96%. Ассистирует врачам, не заменяя их.</p>
+                        <div class="case-stats">
+                            <div class="case-stat"><span class="case-stat-val">96%</span><span class="case-stat-label">Точность</span></div>
+                            <div class="case-stat"><span class="case-stat-val">-50%</span><span class="case-stat-label">Время анализа</span></div>
+                            <div class="case-stat"><span class="case-stat-val">3.7x</span><span class="case-stat-label">ROI</span></div>
+                        </div>
                     </div>
                 </div>
             </div>
             <div class="cases-arrows" data-anim>
-                <button class="case-arrow case-arrow-left" id="case-left">←</button>
+                <button class="case-arrow" id="case-left">←</button>
                 <div class="cases-dots" id="cases-dots"></div>
-                <button class="case-arrow case-arrow-right" id="case-right">→</button>
+                <button class="case-arrow" id="case-right">→</button>
             </div>
         </div>
     </section>

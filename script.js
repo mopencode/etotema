@@ -362,59 +362,67 @@ function initCardTilt() {
   }
 
   function initCasesCarousel() {
-    var track = document.getElementById('cases-track');
+    var slides = document.querySelectorAll('.cases-slide');
     var dotsContainer = document.getElementById('cases-dots');
     var leftBtn = document.getElementById('case-left');
     var rightBtn = document.getElementById('case-right');
-    if (!track || !dotsContainer) return;
+    if (!slides.length || !dotsContainer) return;
 
-    var cards = track.querySelectorAll('.case-card');
-    var numPages = Math.ceil(cards.length / 1);
-    var currentPage = 0;
+    var current = 0;
+    var total = slides.length;
+    var autoTimer = null;
 
     function buildDots() {
       dotsContainer.innerHTML = '';
-      var pages = window.innerWidth <= 640 ? cards.length : Math.ceil(cards.length / 2);
-      for (var i = 0; i < pages; i++) {
+      for (var i = 0; i < total; i++) {
         var dot = document.createElement('div');
         dot.className = 'cases-dot' + (i === 0 ? ' active' : '');
         dot.setAttribute('data-index', i);
         dot.addEventListener('click', function () {
-          var idx = parseInt(this.getAttribute('data-index'), 10);
-          scrollToCard(idx);
+          goTo(parseInt(this.getAttribute('data-index'), 10));
         });
         dotsContainer.appendChild(dot);
       }
     }
 
-    function scrollToCard(idx) {
-      var cardWidth = cards[0].offsetWidth + 20;
-      track.scrollTo({ left: idx * cardWidth, behavior: 'smooth' });
-      currentPage = idx;
+    function goTo(index) {
+      if (index < 0) index = total - 1;
+      if (index >= total) index = 0;
+      var direction = index > current ? 1 : -1;
+      slides[current].classList.remove('active');
+      slides[current].classList.add('exit-' + (direction > 0 ? 'left' : 'right'));
+
+      slides[index].style.transform = direction > 0 ? 'translateX(40px)' : 'translateX(-40px)';
+      slides[index].classList.add('active');
+      slides[index].style.transform = '';
+
+      var prev = current;
+      current = index;
       updateDots();
+
+      setTimeout(function () {
+        slides[prev].classList.remove('exit-left', 'exit-right');
+      }, 400);
+
+      resetAuto();
     }
 
     function updateDots() {
       dotsContainer.querySelectorAll('.cases-dot').forEach(function (d, i) {
-        d.classList.toggle('active', i === currentPage);
+        d.classList.toggle('active', i === current);
       });
     }
 
-    leftBtn.addEventListener('click', function () {
-      if (currentPage > 0) scrollToCard(currentPage - 1);
-    });
-    rightBtn.addEventListener('click', function () {
-      var maxPage = window.innerWidth <= 640 ? cards.length - 1 : Math.ceil(cards.length / 2) - 1;
-      if (currentPage < maxPage) scrollToCard(currentPage + 1);
-    });
+    function resetAuto() {
+      clearInterval(autoTimer);
+      autoTimer = setInterval(function () { goTo(current + 1); }, 5000);
+    }
 
-    track.addEventListener('scroll', function () {
-      var cardWidth = cards[0].offsetWidth + 20;
-      currentPage = Math.round(track.scrollLeft / cardWidth);
-      updateDots();
-    });
+    leftBtn.addEventListener('click', function () { goTo(current - 1); });
+    rightBtn.addEventListener('click', function () { goTo(current + 1); });
 
     buildDots();
+    resetAuto();
   }
 
   function initFAQ() {
